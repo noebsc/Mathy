@@ -4,768 +4,563 @@
   <meta charset="UTF-8">
   <title>Mathy by Noé</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Police principale "carrée et imposante" pour Mathy, + police confort lecture -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Styles très simples et épurés, BEIGE BRIQUE seul, police système -->
   <style>
     :root {
-      --beige: #e9dec2;
-      --brique: #cf9773;
-      --glass-dark: rgba(207, 151, 115, 0.17);
-      --glass-light: rgba(233, 222, 194, 0.62);
-      --glass: rgba(230, 202, 171, 0.44);
-      --accent: #db6a3c;
-      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-      --radius: 24px;
-      --transition: all 0.9s cubic-bezier(.77,0,.18,1);
-      --font-main: 'Montserrat', sans-serif;
-      --font-title: 'Orbitron', sans-serif;
+      --beige: #f5ead0;
+      --brique: #cb9161;
+      --beigeDark: #ddc6a3;
+      --accent: #af6a3a;
+      --border: #cba582;
+      --text: #473423;
+      --radius: 12px;
+      --shadow: 0 2px 10px #ccb49330;
+      --transition: .22s cubic-bezier(.40,.48,.39,.94);
     }
     body {
-      background: linear-gradient(125deg, var(--beige) 60%, var(--brique) 105%);
+      background: var(--beige);
       min-height: 100vh;
       margin: 0;
-      font-family: var(--font-main);
-      overflow-x: hidden;
-    }
-    .glass {
-      background: var(--glass-dark);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1.5px solid var(--glass-light);
-      transition: var(--transition);
+      font-family: system-ui, Arial, sans-serif;
+      color: var(--text);
     }
     header {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 14px 4vw 14px 2vw;
-      transition: var(--transition);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 3vw; border-bottom: 1px solid var(--border);
+      background: var(--beigeDark);
+    }
+    .left {
+      display:flex;align-items:center;gap:20px;
     }
     .burger {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      background: var(--glass);
-      border-radius: 50%;
-      margin-right: 16px;
-      z-index: 20;
-      transition: var(--transition);
-      border: 1px solid var(--beige);
-      box-shadow: 0 4px 16px #cf977320;
+      width:40px;height:40px;display:flex;align-items:center;cursor:pointer;
+      background:var(--beige);border-radius:10px;justify-content:center;border:1px solid var(--border);
+      transition:box-shadow var(--transition);
     }
-    .burger span, .burger span:before, .burger span:after {
-      content: '';
-      display: block;
-      background: var(--accent);
-      height: 4px;
-      width: 28px;
-      border-radius: 2px;
-      transition: var(--transition);
-      position: relative;
+    .burger span,.burger span:before,.burger span:after{
+      display:block;height:4px;width:24px;border-radius:2px;background:var(--accent);
+      position:relative;transition:var(--transition)
     }
-    .burger span { position: relative; }
-    .burger span:before { position: absolute; top:-10px; }
-    .burger span:after { position: absolute; top:10px; }
-    .burger.open span { background: transparent; }
-    .burger.open span:before {
-      top:0; transform: rotate(45deg);
+    .burger span:before{content:"";position:absolute;top:-7px;}
+    .burger span:after{content:"";position:absolute;top:7px;}
+    .burger.open span{background:transparent;}
+    .burger.open span:before{top:0;transform:rotate(45deg);}
+    .burger.open span:after{top:0;transform:rotate(-45deg);}
+    .title-mathy{font-weight:bold;font-size:1.8rem;color:var(--accent);}
+    .by-noe{font-size:.95rem;color:#a17657;margin-left:8px;font-weight:normal;}
+    nav.sidebar {
+      position:fixed;top:0;left:-230px;height:100vh;width:200px;z-index:9;
+      background:var(--beigeDark);border-right:1px solid var(--border);
+      display:flex;flex-direction:column;gap:10px;padding-top:70px;
+      transition:left var(--transition);
+      box-shadow:0 2px 16px #ad957530;
     }
-    .burger.open span:after {
-      top:0; transform: rotate(-45deg);
+    nav.sidebar.open { left:0; }
+    nav.sidebar button {
+      background:none;border:none;font:600 1.12rem system-ui;
+      color:var(--accent);padding:12px 28px;text-align:left;cursor:pointer;
+      border-radius:var(--radius);
+      transition:background var(--transition),color var(--transition);
     }
-    .title-mathy {
-      font-family: var(--font-title);
-      font-size: 2.8rem;
-      color: var(--accent);
-      letter-spacing: .5px;
-      font-weight: 800;
-      margin-right: 10px;
-      user-select: none;
-      text-shadow: 2px 3px 14px #cf977341;
-      background: linear-gradient(180deg, var(--accent) 50%, var(--beige) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    nav.sidebar button.active,
+    nav.sidebar button:hover {background:var(--accent);color:#fff;}
+    nav.sidebar button:last-child {margin-top:auto;color:#903a10;}
+    main.content {
+      margin:32px 3vw;min-height:60vh;max-width:900px;
+      transition:margin var(--transition);
     }
-    .by-noe {
-      font-family: var(--font-main);
-      font-size: 1.09rem;
-      color: #9d6d4e;
-      font-weight: 600;
-      opacity: 0.7;
-      margin-top: 20px;
-      margin-left: 8px;
+    @media (max-width:600px){main.content{margin:24px 2vw;} nav.sidebar{width:90vw;max-width:290px;left:-93vw;}}
+    /* Anim rapides utiles */
+    .fade { animation:fade .2s linear; }
+    @keyframes fade { from {opacity:0;transform:translateY(18px);} to{opacity:1;transform:translateY(0);} }
+    /* TABLES */
+    .tables-grid {
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:22px;margin:25px 0 0 0;
     }
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -272px;
-      height: 100vh;
-      width: 250px;
-      background: var(--glass);
-      box-shadow: 7px 0 22px 0 rgba(31, 38, 135, 0.16);
-      z-index: 10;
-      transition: left 0.7s cubic-bezier(.74,0,.16,1);
-      padding-top: 98px;
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      backdrop-filter: blur(26px);
+    .table-multi {
+      border:1.5px solid var(--border);border-radius:10px;padding:11px 8px 8px 8px;
+      background:#fff;transition:box-shadow .18s;
+      cursor:pointer;text-align:center;
+      box-shadow:var(--shadow);
+      font-size:1.18rem;
     }
-    .sidebar.open { left: 0; }
-    .sidebar button {
-      background: transparent;
-      border: none;
-      font: 700 1.13rem var(--font-main);
-      color: var(--brique);
-      text-align: left;
-      padding: 14px 30px;
-      cursor: pointer;
-      border-radius: 14px;
-      transition: var(--transition);
+    .table-multi.selected,.table-multi:hover { border:1.8px solid var(--accent);box-shadow:0 3px 10px #cb91615d; background:#fffcf6;}
+    /* Zoom Table plein écran */
+    .zoom-table-bg {
+      position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.16);
+      z-index:20;display:flex;align-items:center;justify-content:center;
     }
-    .sidebar button.active, .sidebar button:hover {
-      background: var(--accent);
-      color: #fff;
-      font-weight: bold;
-      letter-spacing: .5px;
-      box-shadow: 0 2px 6px #b579593b;
-      transform: translateX(12px) scale(1.08);
+    .zoom-table {
+      background:#fff;border-radius:18px;box-shadow:0 6px 40px #b4854b23;
+      padding:32px 38px;margin:0;
+      font-size:1.21rem;max-width:95vw;
+      border:2.5px solid var(--accent);
     }
-    .content {
-      margin: 24px 30px 40px 285px;
-      min-height: 60vh;
-      transition: margin .9s cubic-bezier(.77,0,.18,1);
+    /* QUIZ */
+    .quiz-select {
+      display:flex;flex-wrap:wrap;gap:10px 24px;margin:18px 0 25px 0;
     }
-    @media (max-width: 860px) { .content{margin-left:13vw;} .sidebar{width:93vw;} }
-    @media (max-width: 660px) { .content{margin-left:0;} .sidebar {left:-93vw;} }
-    .fade-in {
-      animation: fadeIn 1.24s cubic-bezier(.44,.69,.19,.94) both;
+    .select-table {
+      padding:5px 14px;border-radius:8px;border:1.3px solid var(--accent);
+      background:#f9ecdb;cursor:pointer;margin-bottom:6px;
+      font-size:1rem;transition:background .16s;
+      display:flex;align-items:center;gap:7px;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(32px);}
-      to { opacity: 1; transform: translateY(0);}
+    .select-table.selected, .select-table:active {
+      background:var(--accent);color:#fff!important;border:1.5px solid var(--accent);
     }
-    .popup {
-      animation: popup .8s cubic-bezier(.92,-0.1,.02,1.12) both;
-    }
-    @keyframes popup {
-      0% {transform: scale(.7);}
-      60% {transform: scale(1.06);}
-      100% {transform: scale(1);}
-    }
-    .glass-btn {
-      background: var(--brique);
-      color: var(--beige);
-      border: none;
-      padding: 15px 45px;
-      font-size: 1.12rem;
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-      margin: 24px 0 5px 0;
-      cursor: pointer;
-      font-weight: bold;
-      letter-spacing: .7px;
-      transition: var(--transition);
-    }
-    .glass-btn:active {
-      background: var(--accent);
-      transform: scale(.95);
-    }
-    .fullscreen-table {
-      position: fixed;
-      z-index: 9;
-      left: 0; right: 0; top: 0; bottom: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: rgba(210, 167, 135, 0.38);
-      animation: fadeIn .75s;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    .fullscreen-table .glass {
-      border-radius: 42px;
-    }
+    .select-table input[type="checkbox"]{margin-right:.6em;}
+    /* ProgressBar */
     .progress-bar {
-      width: 100%;
-      height: 13px;
-      border-radius: 8px;
-      background: #ecd4ae;
-      overflow: hidden;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow);
+      height:9px;background:#ecd4ae;border-radius:5px;width:270px;max-width:96vw;overflow:hidden;margin:0 auto 14px auto;
+      border:1px solid var(--brique);
     }
-    .progress {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 8px;
-      width: 100%;
-      transition: width 0.8s cubic-bezier(.65,0,.55,1);
+    .bar-inner {background:var(--accent);height:100%;width:100%;transition:width .11s;}
+    /* Input Quiz */
+    .quiz-input {font-size:1.5rem;padding:8px 13px;width:110px;}
+    /* Mode Blancs Multi */
+    .blanks-grid {
+      display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+      margin-top:23px;background:#fff;border-radius:12px;padding:22px 7px;
+      border:1.5px solid var(--border);
     }
-    .card-mode {
-      min-width: 320px;
-      max-width: 420px;
-      height: 200px;
-      margin: 0 auto;
-      margin-top: 45px;
-      perspective: 1550px;
-      position: relative;
+    .blank-box {font-size:1.09rem;}
+    .blank-answer {
+      width:52px;font-size:1.19rem;text-align:center;margin:0 4px 0 0;
+      border:1.2px solid #bdbdbd;border-radius:6px;padding:4px 2px;
     }
-    .flip-card {
-      width: 100%;
-      height: 100%;
-      transition: var(--transition);
-      transform-style: preserve-3d;
-      position: relative;
+    .blank-correct{background:#d4f4da;border:1.5px solid #49b26b;}
+    .blank-wrong{background:#fae4db;border:1.5px solid #d46c5d;}
+    .correction-row {font-size:0.91rem;color:var(--accent);}
+    /* Mode Cartes */
+    .card-zone {margin-top:40px;display:flex;flex-direction:column;align-items:center;}
+    .card-flip{
+      height:130px;width:260px;display:flex;align-items:center;justify-content:center;
+      border-radius:16px;background:#fff;font-size:2rem;color:var(--accent);
+      border:2.5px solid var(--accent);cursor:pointer;
+      perspective:800px;position:relative;transition:box-shadow .19s;
+      margin-bottom:18px;box-shadow:0 6px 26px #b4854b19;}
+    .flip-animate {
+      animation:flipAnim .26s cubic-bezier(.77,0,.23,1.06);
+      transform:rotateY(180deg) scale(1.05);
     }
-    .card-front, .card-back {
-      width: 100%;
-      height: 100%;
-      border-radius: 18px;
-      background: var(--glass);
-      box-shadow: var(--shadow);
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.15rem;
-      font-weight: bold;
-      color:var(--accent);
-      backface-visibility: hidden;
+    @keyframes flipAnim {0%{transform:rotateY(0);opacity:.7;}70%{transform:rotateY(180deg) scale(1.13);}90%{transform:rotateY(162deg);} 100%{transform:rotateY(180deg) scale(1.05);}}
+    .card-arrows {display:flex;gap:22px;margin-top:12px;}
+    .card-arrows button{
+      font-size:1.5rem;padding:7px 23px;background:var(--brique);
+      color:#fff;border:none;border-radius:8px;cursor:pointer;transition:background .18s;}
+    .card-arrows button:disabled {background:#e0c0a6;color:#cb9161;}
+    /* Suivi */
+    .main-stats{display:flex;flex-wrap:wrap;gap:28px;margin-top:18px;}
+    .stat-block {background:#fff;border-radius:10px;box-shadow:var(--shadow);padding:20px 28px;flex:1 1 220px;}
+    .stat-block .num{color:var(--accent);font-weight:bold;font-size:1.75rem;}
+    .stat-title{font-size:1.04rem;margin-bottom:8px;}
+    /* Table historique */
+    .suivi-table {width:100%;border-collapse:collapse;}
+    .suivi-table th, .suivi-table td {padding:6px 12px;text-align:center;}
+    .suivi-table th {background:var(--beigeDark);}
+    .suivi-table td {background:#fff;}
+    /* Paramètres */
+    .param-form {max-width:380px;margin:0 auto;}
+    .param-form input[type="text"]{width:100%;padding:9px 12px;font-size:1.08rem;margin-bottom:14px;border:1px solid #bdbdbd;border-radius:8px;}
+    .param-btns{display:flex;gap:14px;justify-content:space-between;margin-top:18px;}
+    .reset-btn {
+      background:#fff;color:#af4a0a;padding:11px 22px;border:1.5px solid #af4a0a;
+      border-radius:9px;cursor:pointer;font-weight:bold;transition:background .12s;}
+    .reset-btn:hover{background:#af4a0a;color:#fff;}
+    .save-btn{background:var(--accent);color:#fff;}
+    .confirm-layer{
+      position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.22);
+      display:flex;align-items:center;justify-content:center;z-index:50;
     }
-    .card-back {
-      transform: rotateY(180deg);
-      color: #fff;
-      background: var(--accent);
+    .confirm-box{
+      background:#fff;padding:30px 40px;border-radius:14px;box-shadow:0 8px 30px #ad957550;
+      text-align:center;min-width:230px;
     }
-    .flip-card.flipped {
-      transform: rotateY(180deg);
+    .confirm-box button{margin:10px 24px 0 24px;}
+    .hidden {display:none;}
+    /* Mobile */
+    @media (max-width:400px){
+      .blanks-grid{grid-template-columns:repeat(2,1fr);}
+      .card-flip{width:98vw;min-width:148px;}
     }
-    .card-arrows {
-      display: flex;
-      position: absolute;
-      top: 50%;
-      left: -46px;
-      right: -46px;
-      justify-content: space-between;
-      align-items: center;
-      width: calc(100% + 92px);
-      pointer-events: none;
-    }
-    .card-arrows button {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 46px;
-      height: 46px;
-      font-size: 1.65rem;
-      pointer-events: auto;
-      cursor: pointer;
-      box-shadow: 0 4px 12px #b5795948;
-      transition: var(--transition);
-      margin:0 5px;
-    }
-    .glass-form input, .glass-form select {
-      width: 97%;
-      padding: 13px;
-      margin: 12px 0 21px 0;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 2px 18px #cf977318;
-      background: var(--glass-light);
-      color: var(--brique);
-      font-size:1.08rem;
-      outline: none;
-      transition: box-shadow .7s, background .84s;
-    }
-    .glass-form input:focus {
-      background: var(--glass);
-      box-shadow: 0 10px 28px #cf977374;
-    }
-    .confirm-box {
-      position: fixed; z-index: 100; top:0;left:0;right:0;bottom:0; display: flex;align-items:center;justify-content: center;
-      background:rgba(0,0,0,.42); animation:fadeIn .2s;
-    }
-    .confirm-message {
-      background: var(--glass-light);
-      border-radius: 16px;
-      padding: 42px 46px;
-      box-shadow: var(--shadow);
-      font-size: 1.19rem;
-      color: var(--brique);
-      text-align: center;
-      animation:popup .6s both;
-    }
-    .confirm-buttons {
-      display: flex; justify-content:center; gap:22px; margin-top:20px;
-    }
-    .param-saved {
-      font-size:1rem;
-      color: #196f13;
-      text-align: right;
-      margin: -10px 0 15px 0;
-      display:none;
-    }
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 8px; background:var(--beige);}
-    ::-webkit-scrollbar-thumb { background:var(--glass-dark); border-radius:3px;}
-    /* Responsive */
-    @media (max-width: 610px) { .card-mode { max-width:98vw; min-width:0; } .sidebar { left: -98vw; width:98vw;} .content {margin: 24px 1vw 40px 5vw;} }
-    /* Checkbox custom */
-    input[type="checkbox"].quiz-table { width: 18px; height:18px; accent-color: var(--accent);}
-    label[style*="quiz-table"] { user-select: none; cursor:pointer; }
   </style>
 </head>
 <body>
   <header>
-    <div class="burger" id="burger"><span></span></div>
-    <div class="title-mathy">Mathy<span class="by-noe">by Noé</span></div>
+    <div class="left">
+      <div class="burger" id="burger"><span></span></div>
+      <span class="title-mathy">Mathy</span>
+      <span class="by-noe">by Noé</span>
+    </div>
   </header>
-  <nav class="sidebar glass" id="sidebar">
-    <button data-page="tables" class="active">Tables de multiplication</button>
+  <nav class="sidebar" id="sidebar">
+    <button data-page="tables" class="active">Tables</button>
     <button data-page="apprentissage">Apprentissage</button>
     <button data-page="suivi">Suivi</button>
     <button data-page="parametres">Paramètres</button>
-    <button id="logoutBtn" style="margin-top:auto;color:#b04f15;font-size:1.1rem;">Déconnexion</button>
+    <button id="logoutBtn">Déconnexion</button>
   </nav>
-  <main class="content fade-in" id="content"></main>
-  <div id="confirmBox" style="display:none;">
-    <div class="confirm-box">
-      <div class="confirm-message">
-        <span id="confirmMsg"></span>
-        <div class="confirm-buttons">
-          <button class="glass-btn" id="confirmYes">Oui</button>
-          <button class="glass-btn" id="confirmNo">Non</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="authModal" style="position:fixed;z-index:1000;top:0;left:0;right:0;bottom:0; background:rgba(240,211,192,.93);display:flex;align-items:center;justify-content:center;">
-    <form id="authForm" class="glass glass-form" style="min-width:340px;display:flex;flex-direction:column;align-items:center;padding:42px 38px;">
-      <h2 style="font-family:var(--font-title);font-size:2rem;color:var(--accent);">Connexion à Mathy</h2>
-      <input type="email" id="email" placeholder="Adresse e-mail" required autocomplete="email" />
-      <input type="password" id="password" placeholder="Mot de passe" required autocomplete="current-password" />
-      <button class="glass-btn" type="submit" style="margin-bottom:19px;">Se connecter</button>
-      <div style="text-align:center;font-size:1.05rem;margin-bottom:.6em;">
-        Pas encore inscrit ? <span id="registerLink" style="color:var(--accent);cursor:pointer;text-decoration:underline;">Créer un compte</span>
-      </div>
-      <div style="color:#bf3838;font-size:1rem;" id="authError"></div>
+  <main class="content fade" id="content"></main>
+  <div id="confirmLayer" class="hidden"></div>
+  <div id="authModal" style="position:fixed;z-index:1000;top:0;left:0;right:0;bottom:0; background:#f5ead0;display:flex;align-items:center;justify-content:center;">
+    <form id="authForm" style="background:#fff;padding:33px 28px;border-radius:12px;box-shadow:0 5px 35px #bca57e30;display:flex;flex-direction:column;gap:17px;min-width:250px;">
+      <h2 style="font-size:1.3rem;color:var(--accent);margin:0 0 14px 0;">Connexion à Mathy</h2>
+      <input type="email" id="email" placeholder="Adresse e-mail" required autocomplete="email" style="font-size:1.03rem;padding:10px 5px;border-radius:6px;border:1px solid #cba582;">
+      <input type="password" id="password" placeholder="Mot de passe" required autocomplete="current-password" style="font-size:1.03rem;padding:10px 5px;border-radius:6px;border:1px solid #cba582;">
+      <button style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 0;font-size:1.09rem;cursor:pointer;">Se connecter</button>
+      <div style="font-size:.98rem;text-align:center;">Pas encore inscrit ? <span id="registerLink" style="color:var(--accent);cursor:pointer;text-decoration:underline;">Créer un compte</span></div>
+      <div style="color:#d01f1f;font-size:.97rem;" id="authError"></div>
     </form>
   </div>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-    import { getDatabase, ref, set, get, update, onValue } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+<script type="module">
+// ============== Firebase (v12) ==============
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyAz4RmoInpNHsjCMHM6tMdv1SWgUEB7ZyI",
+  authDomain: "mathy-f7fc0.firebaseapp.com",
+  databaseURL: "https://mathy-f7fc0-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "mathy-f7fc0",
+  storageBucket: "mathy-f7fc0.appspot.com",
+  messagingSenderId: "612107190361",
+  appId: "1:612107190361:web:4b8c56d142372fc100f148",
+  measurementId: "G-RQYNBK3BDE"
+};
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const db = getDatabase(app);
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAz4RmoInpNHsjCMHM6tMdv1SWgUEB7ZyI",
-      authDomain: "mathy-f7fc0.firebaseapp.com",
-      databaseURL: "https://mathy-f7fc0-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "mathy-f7fc0",
-      storageBucket: "mathy-f7fc0-firebaseapp.com",
-      messagingSenderId: "612107190361",
-      appId: "1:612107190361:web:4b8c56d142372fc100f148",
-      measurementId: "G-RQYNBK3BDE"
-    };
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth(app);
-    const db = getDatabase(app);
+// ============= Interface Navigation =============
+const burger = document.getElementById("burger"), sidebar = document.getElementById("sidebar"), content = document.getElementById("content");
+burger.onclick = () => { burger.classList.toggle('open'); sidebar.classList.toggle('open'); };
+document.body.addEventListener("mousedown", e=>{
+  if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !burger.contains(e.target)) {
+    burger.classList.remove('open'); sidebar.classList.remove('open');
+  }
+});
+sidebar.querySelectorAll("button[data-page]").forEach(btn => {
+  btn.onclick = () => switchPage(btn.dataset.page, btn);
+});
+let currentPage = "tables";
+function switchPage(page, btn){
+  sidebar.querySelectorAll("button[data-page]").forEach(b=>b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  currentPage = page;
+  content.classList.remove("fade");
+  setTimeout(()=>{ renderPage(page); content.classList.add("fade"); }, 60);
+  if(window.innerWidth<700){ burger.classList.remove('open'); sidebar.classList.remove('open'); }
+}
 
-    // BURGER + SIDEBAR ANIM
-    const burger = document.getElementById("burger");
-    const sidebar = document.getElementById("sidebar");
-    burger.onclick = () => { burger.classList.toggle('open'); sidebar.classList.toggle('open'); };
-    document.body.addEventListener("mousedown", e=>{
-      if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !burger.contains(e.target)) {
-        burger.classList.remove('open'); sidebar.classList.remove('open');
-      }
-    });
-
-    // NAVIGATION
-    const content = document.getElementById("content");
-    sidebar.querySelectorAll("button[data-page]").forEach(btn => {
-      btn.onclick = () => switchPage(btn.dataset.page, btn);
-    });
-    let currentPage = "tables";
-    function switchPage(page, btn){
-      sidebar.querySelectorAll("button[data-page]").forEach(b=>b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      currentPage = page;
-      document.querySelector('.content').classList.remove("fade-in");
-      setTimeout(()=>{ renderPage(page); document.querySelector('.content').classList.add("fade-in"); }, 260);
-      if(window.innerWidth<660){ burger.classList.remove('open'); sidebar.classList.remove('open'); }
+// ============= Authentification =============
+const authModal = document.getElementById("authModal");
+const authForm = document.getElementById("authForm");
+const emailInput = document.getElementById("email");
+const pwInput = document.getElementById("password");
+const authError = document.getElementById("authError");
+const registerLink = document.getElementById("registerLink");
+let isRegisterMode = false;
+registerLink.onclick = ()=>{
+  isRegisterMode = !isRegisterMode;
+  authForm.querySelector("button[type='submit']").innerText = isRegisterMode ? "Créer un compte" : "Se connecter";
+  registerLink.innerText = isRegisterMode ? "Déjà inscrit ? Se connecter" : "Créer un compte";
+};
+authForm.onsubmit = async (e)=>{
+  e.preventDefault();
+  authError.innerText = "";
+  try{
+    if(isRegisterMode){
+      await createUserWithEmailAndPassword(auth, emailInput.value, pwInput.value);
+      await set(ref(db,'settings/'+auth.currentUser.uid), { userName:emailInput.value.split("@")[0] });
+    } else {
+      await signInWithEmailAndPassword(auth, emailInput.value, pwInput.value);
     }
+  } catch(err){ authError.innerText = err.message; }
+}
+onAuthStateChanged(auth, user=>{
+  if (user) { authModal.style.display = "none"; renderPage(currentPage);}
+  else {authModal.style.display = "flex"; content.innerHTML = "";}
+});
+document.getElementById("logoutBtn").onclick = ()=>{ signOut(auth); }
 
-    // AUTHENTIFICATION
-    const authModal = document.getElementById("authModal");
-    const authForm = document.getElementById("authForm");
-    const emailInput = document.getElementById("email");
-    const pwInput = document.getElementById("password");
-    const authError = document.getElementById("authError");
-    const registerLink = document.getElementById("registerLink");
-    let isRegisterMode = false;
-    registerLink.onclick = ()=>{
-      isRegisterMode = !isRegisterMode;
-      authForm.querySelector("button[type='submit']").innerText = isRegisterMode ? "Créer un compte" : "Se connecter";
-      registerLink.innerText = isRegisterMode ? "Déjà inscrit ? Se connecter" : "Créer un compte";
-    };
-    authForm.onsubmit = async (e)=>{
+// ============= Pages =============
+function renderPage(page){
+  if (page==="tables") renderTables();
+  else if (page==="apprentissage") renderApprentissage();
+  else if (page==="suivi") renderSuivi();
+  else if (page==="parametres") renderParametres();
+}
+
+// ----------- TABLES MULTIPLICATION -----------
+function renderTables(){
+  let html = `<h1 style="font-size:1.4rem;color:var(--accent);margin:0 0 7px 0;">Toutes les tables de multiplication</h1>
+    <div class="tables-grid">`;
+  for(let t=1;t<=12;t++){
+    html+=`<div class="table-multi" onclick="showTableZoom(${t})" id="t${t}">
+      <div style="font-weight:bold;color:var(--accent);font-size:1.12rem;">Table de ${t}</div>
+      <div>`;
+    for(let i=1;i<=12;i++){ html += `<div>${t} × ${i} = <b>${t*i}</b></div>`;}
+    html+=`</div></div>`;
+  }
+  html+=`</div>`;
+  content.innerHTML = html;
+}
+window.showTableZoom = function(n){
+  const overlay=document.createElement('div');
+  overlay.className='zoom-table-bg';
+  overlay.onclick=e=>{if(e.target===overlay)overlay.remove();}
+  let html = `<div class="zoom-table"><h2 style="color:var(--accent);font-size:1.31rem;margin:0 0 8px 0;">Table de ${n}</h2>`;
+  for(let i=1;i<=12;i++) html+=`<div>${n} × ${i} = <b>${n*i}</b></div>`;
+  html+=`</div>`;
+  overlay.innerHTML=html;document.body.appendChild(overlay);
+}
+
+// ----------- APPRENTISSAGE (MODES) -----------
+function renderApprentissage(){
+  content.innerHTML=`
+    <h1 style="font-size:1.25rem;color:var(--accent);">Apprentissage</h1>
+    <div style="margin:15px 0 22px 0;display:flex;gap:20px;flex-wrap:wrap;">
+      <button class="save-btn" style="padding:12px 25px;" onclick="selectQuizTables()">Quiz</button>
+      <button class="save-btn" style="padding:12px 25px;" onclick="renderBlanksQuiz()">Tables à trous</button>
+      <button class="save-btn" style="padding:12px 25px;" onclick="renderCardMode()">Mode cartes</button>
+    </div>
+    <div id="apprZone"></div>
+  `;
+}
+window.selectQuizTables = function(){
+  let tables = '';
+  for(let i=1;i<=12;i++)
+    tables += `<label class="select-table" id="qsel${i}" onclick="event.preventDefault();toggleQuizTable(${i})">
+      <input type="checkbox" id="ch${i}" value="${i}" checked style="pointer-events:none;"> ${i}
+    </label>`;
+  document.getElementById('apprZone').innerHTML = `
+    <div><b>Choisis les tables à travailler :</b></div>
+    <div class="quiz-select">${tables}</div>
+    <button onclick="startQuiz()" class="save-btn" style="margin:18px 0;">Démarrer le quiz</button>
+  `;
+  window.selectedQuizTables = Array(12).fill(true);
+}
+window.toggleQuizTable = function(n){
+  window.selectedQuizTables[n-1] = !window.selectedQuizTables[n-1];
+  document.getElementById('ch'+n).checked = window.selectedQuizTables[n-1];
+  let elem=document.getElementById('qsel'+n);
+  if(window.selectedQuizTables[n-1]) elem.classList.add('selected');
+  else elem.classList.remove('selected');
+}
+window.startQuiz = function(){
+  let arr=[];for(let i=1;i<=12;i++)if(window.selectedQuizTables[i-1])for(let j=1;j<=12;j++)arr.push([i,j]);
+  if(arr.length===0){alert("Sélectionne au moins une table.");return;}
+  arr.sort(()=>Math.random()-.5);
+  window.quizData = arr; window.quizIndex=0; window.quizResults=[]; nextQuiz();
+}
+function nextQuiz(){
+  if(window.quizIndex>=window.quizData.length) return finishQuiz();
+  let [a,b]=window.quizData[window.quizIndex];
+  let apprZone = document.getElementById('apprZone');
+  apprZone.innerHTML=`<div style="text-align:center;">
+    <div class="progress-bar"><div class="bar-inner" id="qtimer"></div></div>
+    <div style="margin:10px 0; font-size:1.58rem;font-weight:bold;">${a} × ${b}</div>
+    <input class="quiz-input" id="quizAnswer" autocomplete="off" type="number" />
+    <div><button class="save-btn" onclick="submitQuizAnswer()">Valider</button></div>
+  </div>`;
+  animateBar(10,500,()=>submitQuizAnswer(true));
+  setTimeout(()=>{document.getElementById('quizAnswer').focus();},200);
+}
+function animateBar(sec,interval,callback){
+  const bar=document.getElementById('qtimer');
+  let progress=100,step=100/(sec*1000/interval);
+  let timer = setInterval(()=>{
+    progress-=step; bar.style.width=Math.max(progress,0)+'%';
+    if(progress<=0){clearInterval(timer);callback();}
+  },interval);window.qBarTimer=timer;
+}
+window.submitQuizAnswer = function(timeout){
+  clearInterval(window.qBarTimer);
+  const val = +document.getElementById("quizAnswer").value;
+  let [a,b] = window.quizData[window.quizIndex];
+  window.quizResults.push({q: [a,b], a: val, ok: val===a*b, timeout});
+  window.quizIndex++; nextQuiz();
+}
+function finishQuiz(){
+  // Save and display results
+  let results = window.quizResults;
+  let ok=results.filter(x=>x.ok&&!x.timeout).length,total=results.length;
+  let timeouts=results.filter(x=>x.timeout).length;
+  saveQuizToDB(results);
+  document.getElementById('apprZone').innerHTML = `
+    <div style="text-align:center;margin-top:29px;">
+      <div style="font-size:1.23rem;margin-bottom:14px;color:var(--accent);">
+        Résultat : <b>${ok} / ${total}</b>
+      </div>
+      <div style="font-size:.99rem;">Questions hors temps : <b>${timeouts}</b></div>
+      <button class="save-btn" onclick="renderApprentissage()" style="margin-top:20px;">Retour</button>
+    </div>
+  `;
+}
+function saveQuizToDB(results){
+  const uid = auth.currentUser.uid;
+  const quiz = { results, date: Date.now() };
+  const refQ = ref(db, 'quizz/'+uid+'/');
+  get(refQ).then(snapshot=>{
+    let arr = snapshot.exists() ? snapshot.val() : [];
+    arr=Array.isArray(arr)?arr:[]; arr.push(quiz); set(refQ, arr);
+  });
+}
+
+// ----------- QUIZ À TROUS -----------
+function renderBlanksQuiz(){
+  let qs=[], answers=[], pos=0;
+  for(let t=1;t<=12;t++)for(let i=1;i<=12;i++)qs.push({t,i, blank:Math.random()<.38 });
+  document.getElementById('apprZone').innerHTML = `
+    <form id="blankQuizForm">
+    <div><b>Complète les cases manquantes :</b></div>
+    <div class="blanks-grid" id="blanksGrid">
+    ${qs.map((q,j)=>q.blank?
+      `<span class="blank-box">${q.t} × ${q.i} = 
+        <input type="number" class="blank-answer" id="bq${j}" data-resp="${q.t*q.i}" required autocomplete="off">
+      </span>`
+      : `<span class="blank-box">${q.t} × ${q.i} = <b>${q.t*q.i}</b></span>`
+    ).join("")}
+    </div>
+    <button class="save-btn" type="submit" style="margin:14px auto;display:block;">Vérifier</button>
+    </form>
+  `;
+  document.getElementById("blankQuizForm").onsubmit=(e)=>{
+    e.preventDefault();
+    let good=0, bad=0, total=0;
+    let inputs = Array.from(document.querySelectorAll(".blank-answer"));
+    for(let inp of inputs){
+      total++;
+      if(+inp.value==+inp.dataset.resp){inp.classList.add("blank-correct");good++;}
+      else {inp.classList.add("blank-wrong");bad++;}
+      inp.disabled=true;
+    }
+    let corr = document.createElement("div");
+    corr.className="correction-row";
+    corr.innerHTML = `${good} / ${total} bonnes réponses.`;
+    document.getElementById("blanksGrid").appendChild(corr);
+    setTimeout(()=>renderApprentissage(),2200);
+  }
+}
+
+// ----------- MODE CARTES -----------
+function renderCardMode(){
+  let arr = [];
+  for(let i=1;i<=12;i++) for(let j=1;j<=12;j++) arr.push([i,j]);
+  arr.sort(()=>Math.random()-.5);
+  window.cardStack=arr;window.cardIndex=0;window.cardFlipped=false;
+  showCard();
+}
+function showCard(){
+  let [a,b] = window.cardStack[window.cardIndex];
+  let flip = window.cardFlipped ? 'flip-animate':'';
+  document.getElementById('apprZone').innerHTML=`
+    <div class="card-zone">
+      <div class="card-flip ${flip}" onclick="flipCard()">
+        ${window.cardFlipped ? `<span>${a*b}</span>` : `<span>${a} × ${b}</span>`}
+      </div>
+      <div class="card-arrows">
+        <button onclick="prevCard(event)" ${window.cardIndex===0?'disabled':''}>&lt;</button>
+        <button onclick="nextCard(event)" ${window.cardIndex===window.cardStack.length-1?'disabled':''}>&gt;</button>
+      </div>
+      <div style="margin-top:7px;font-size:.97rem;">${window.cardIndex+1} / 144</div>
+    </div>
+  `;
+}
+window.flipCard = ()=>{window.cardFlipped=!window.cardFlipped;showCard();};
+window.nextCard = e=>{e.stopPropagation();if(window.cardIndex<window.cardStack.length-1){window.cardIndex++;window.cardFlipped=false;showCard();}};
+window.prevCard = e=>{e.stopPropagation();if(window.cardIndex>0){window.cardIndex--;window.cardFlipped=false;showCard();}};
+
+// ----------- SUIVI -----------
+function renderSuivi(){
+  const uid = auth.currentUser.uid, refQ=ref(db,'quizz/'+uid+'/');
+  get(refQ).then(snapshot=>{
+    let quizz = snapshot.exists()?snapshot.val():[]; quizz = Array.isArray(quizz)?quizz:[];
+    let html = `<h1 style="font-size:1.19rem;color:var(--accent);margin:0 0 15px 0;">Suivi</h1>
+    <div style="overflow-x:auto;"><table class="suivi-table">
+    <tr><th>Date</th><th>Score</th><th>Temps Out</th><th>Sans faute</th></tr>
+    `+quizz.map(q=>{
+      let ok=q.results.filter(x=>x.ok&&!x.timeout).length, total=q.results.length;
+      return `<tr>
+        <td>${new Date(q.date).toLocaleString('fr-FR')}</td>
+        <td><b>${ok} / ${total}</b></td>
+        <td>${q.results.filter(x=>x.timeout).length}</td>
+        <td>${ok===total?"✅":""}</td>
+      </tr>`;
+    }).reverse().join("")+`</table></div>`;
+
+    // stats progression
+    let mastered=0, tableStats = {};
+    quizz.forEach(q=>{
+      q.results.forEach(({q:[a,],ok})=>{
+        tableStats[a]=tableStats[a]||{ok:0,tot:0};tableStats[a].tot++;if(ok)tableStats[a].ok++;
+      });
+    });
+    for(let i=1;i<=12;i++)if(tableStats[i] && tableStats[i].ok>=5) mastered++;
+    let weakest = [], min=1e9;
+    for(let i=1;i<=12;i++) if(tableStats[i] && tableStats[i].ok < min){min=tableStats[i].ok;}
+    for(let i=1;i<=12;i++) if(tableStats[i] && tableStats[i].ok==min)weakest.push(i);
+
+    html+=`<div class="main-stats">
+      <div class="stat-block">
+        <div class="stat-title">Tables maîtrisées</div>
+        <div class="num">${mastered}</div>
+        <div style="font-size:.93rem;">sur 12</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-title">Moins bien maîtrisées</div>
+        <div>${weakest.length?weakest.join(', '):"—"}</div>
+      </div>
+    </div>
+    `;
+    content.innerHTML=html;
+  });
+}
+
+// ----------- PARAMETRES -----------
+function renderParametres(){
+  const uid = auth.currentUser.uid, settingsRef=ref(db,'settings/'+uid+'/');
+  get(settingsRef).then(snap=>{
+    let sett = snap.exists()?snap.val():{userName:""};
+    content.innerHTML = `
+    <h1 style="font-size:1.2rem;color:var(--accent);">Paramètres</h1>
+    <form id="paramForm" class="param-form">
+      <input type="text" id="setUserName" placeholder="Nom d'utilisateur" value="${sett.userName||""}" required>
+      <div class="param-btns">
+        <button class="save-btn" type="submit">Enregistrer</button>
+        <button class="reset-btn" type="button" onclick="showResetConfirm()">Réinitialiser progression</button>
+      </div>
+    </form>
+    `;
+    document.getElementById("paramForm").onsubmit=(e)=>{
       e.preventDefault();
-      authError.innerText = "";
-      if(isRegisterMode){
-        try{
-          const userCred = await createUserWithEmailAndPassword(auth, emailInput.value, pwInput.value);
-          await set(ref(db,'settings/'+userCred.user.uid), { userName:emailInput.value.split("@")[0], theme:"beige-brique" });
-        } catch(err){ authError.innerText = err.message; }
-      } else {
-        try{
-          await signInWithEmailAndPassword(auth, emailInput.value, pwInput.value);
-        } catch(err){ authError.innerText = err.message; }
-      }
-    }
-    onAuthStateChanged(auth, user=>{
-      if (user) {
-        authModal.style.display = "none";
-        renderPage(currentPage);
-      } else {
-        authModal.style.display = "flex";
-        content.innerHTML = "";
-      }
-    });
-    document.getElementById("logoutBtn").onclick = ()=>{ signOut(auth); }
-
-    // RENDER PAGE PRINCIPALE
-    function renderPage(page){
-      if (page==="tables"){ renderTablesMultiplication(); }
-      else if (page==="apprentissage"){ renderApprentissage(); }
-      else if (page==="suivi"){ renderSuivi(); }
-      else if (page==="parametres"){ renderParametres(); }
-    }
-
-    // TABLES DE MULTIPLICATION
-    function renderTablesMultiplication(){
-      let html = `<h1 style="color:var(--accent);font-size:2.07rem;">Tables de multiplication</h1><div id="tables-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:34px; margin-top:37px;">`;
-      for(let i=1;i<=12;i++){
-        html += `<div class="glass fade-in" style="padding:32px 0 24px 0; text-align:center; cursor:pointer; font-size:1.6rem; transition:transform .85s cubic-bezier(.74,.2,.12,1);"
-        onclick="showTableFull(${i})" id="tableCard${i}">
-        <div style="font-size:2.08rem;font-family:var(--font-title);color:var(--brique);">Table de ${i}</div></div>`;
-      }
-      html += '</div>';
-      content.innerHTML = html;
-    }
-    window.showTableFull = showTableFull;
-    let tableFullMode = false;
-    function showTableFull(n){
-      if(tableFullMode) return;
-      tableFullMode = true;
-      const overlay = document.createElement('div');
-      overlay.className = "fullscreen-table";
-      overlay.onclick = (e)=> {
-        if(e.target===overlay){ overlay.classList.add('fade-out'); setTimeout(()=>{overlay.remove(); tableFullMode=false;},390);}
-      };
-      let html = `<div class="glass popup" style="min-width:360px;max-width:95vw;padding:60px 70px;text-align:center;">
-      <h2 style="font-family:var(--font-title);font-size:2rem;color:var(--accent);">Table de ${n}</h2>
-      <div style="font-size:1.68rem;color:var(--brique);padding:24px 0">`;
-      for(let i=1;i<=12;i++){ html += `${n} × ${i} = <b>${n*i}</b><br>`; }
-      html += '</div></div>';
-      overlay.innerHTML = html;
-      document.body.appendChild(overlay);
-    }
-
-    // APPRENTISSAGE
-    function renderApprentissage(){
-      content.innerHTML = `
-        <h1 style="color:var(--accent);font-size:2rem;">Apprentissage</h1>
-        <div style="display:flex;gap:38px;flex-wrap:wrap;margin-top:16px;">
-          <div class="glass fade-in" style="padding:34px;min-width:290px;flex:1 1 285px;">
-            <div style="font-size:1.18rem;font-weight:bold;color:var(--accent);margin-bottom:16px;">Démarrer un quiz</div>
-            <div style="font-size:1rem; color:var(--brique);">Sélectionne les tables, puis lance le quiz !</div>
-            <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:16px 0 13px 0;" id="quiz-tables">` +
-            Array.from({length:12},(_,i)=>`<label style="color:var(--brique);font-size:1.02rem;">
-              <input type="checkbox" class="quiz-table" value="${i+1}" checked /> ${i+1}
-            </label>`).join("")
-            +`</div>
-            <button class="glass-btn" onclick="startQuiz()">Commencer le quiz</button>
-          </div>
-          <div class="glass fade-in" style="padding:34px;min-width:290px;flex:1;">
-            <div style="font-size:1.17rem;font-weight:bold;color:var(--accent);margin-bottom:18px;">Questionnaire avec blancs</div>
-            <div style="font-size:1rem; color:var(--brique);margin-bottom:18px;">Complète toutes les tables, certains résultats sont cachés par des trous à remplir!</div>
-            <button class="glass-btn" onclick="startWhiteQuiz()">Faire le questionnaire</button>
-          </div>
-          <div class="glass fade-in" style="padding:34px;min-width:290px;flex:1;">
-            <div style="font-size:1.18rem;font-weight:bold;color:var(--accent);margin-bottom:18px;">Mode Cartes</div>
-            <div style="font-size:1rem;color:var(--brique);margin-bottom:18px;">Découvre une multiplication aléatoire à la fois, clique pour voir la réponse, avance/reviens !</div>
-            <button class="glass-btn" onclick="startCardMode()">Lancer le mode cartes</button>
-          </div>
-        </div>
-      `;
-    }
-    window.startQuiz = startQuiz;
-    window.startWhiteQuiz = startWhiteQuiz;
-    window.startCardMode = startCardMode;
-
-    // === QUIZ ===
-    let quizData = [], quizIndex = 0, timer = null, quizResults = [];
-    function startQuiz(){
-      let selected = Array.from(document.querySelectorAll(".quiz-table:checked")).map(e=>+e.value);
-      if(selected.length===0) { alert("Sélectionne au moins une table !"); return; }
-      quizData = [];
-      selected.forEach(t => { for(let i=1;i<=12;i++) quizData.push([t,i]); });
-      quizData = quizData.sort(()=>Math.random()-.5);
-      quizIndex = 0; quizResults = [];
-      showQuizQuestion();
-    }
-    function showQuizQuestion(){
-      if(quizIndex>=quizData.length) return finishQuiz();
-      let [a,b]=quizData[quizIndex];
-      content.innerHTML = `
-        <div style="text-align:center;padding-top:44px;">
-          <div class="progress-bar"><div class="progress" id="quizProgress"></div></div>
-          <div class="glass popup" style="font-size:2.15rem; font-family:var(--font-title); color:var(--accent); margin-bottom:30px; padding:30px;">${a} × ${b}</div>
-          <input type="number" style="font-size:2.1rem;padding:15px;width:150px;margin:9px;" id="quizAnswer" autocomplete="off" />
-          <div><button class="glass-btn" onclick="submitQuizAnswer()">Valider</button></div>
-        </div>`;
-      animateQuizBar();
-      setTimeout(()=>{document.getElementById("quizAnswer").focus();},250);
-    }
-    function animateQuizBar(){
-      const bar = document.getElementById("quizProgress");
-      let time = 10;
-      bar.style.width = "100%";
-      if(timer) clearInterval(timer);
-      timer = setInterval(()=>{
-        time-=0.10;
-        bar.style.width = ((time/10)*100)+"%";
-        if(time<=0){ clearInterval(timer); submitQuizAnswer(true);}
-      },65);
-    }
-    window.submitQuizAnswer = submitQuizAnswer;
-    function submitQuizAnswer(timeout=false){
-      clearInterval(timer);
-      const val = +document.getElementById("quizAnswer").value;
-      quizResults.push({q:quizData[quizIndex], a:val, ok: val===(quizData[quizIndex][0]*quizData[quizIndex][1]), timeout});
-      quizIndex++; showQuizQuestion();
-    }
-    function finishQuiz(){
-      let ok=quizResults.filter(x=>x.ok&&!x.timeout).length, total=quizResults.length;
-      saveQuizToDB(quizResults);
-      content.innerHTML = `
-        <div class="glass popup" style="text-align:center;font-size:1.32rem;padding:35px;max-width:520px;margin:55px auto;">
-          <div style="color:var(--accent);font-size:2rem;font-family:var(--font-title);margin-bottom:17px;">Quiz terminé !</div>
-          <div>Score : <b>${ok} / ${total}</b></div>
-          <div style="margin:15px 0 8px 0;color:var(--brique);">Temps dépassé : ${quizResults.filter(x=>x.timeout).length}</div>
-          <button class="glass-btn" onclick="switchPage('apprentissage')">Retour</button>
-        </div>
-      `;
-    }
-    function saveQuizToDB(results){
-      const uid = auth.currentUser.uid;
-      const quiz = { results, date: Date.now() };
-      const refQ = ref(db, 'quizz/'+uid+'/');
-      get(refQ).then(snapshot=>{
-        let arr = snapshot.exists() ? snapshot.val() : [];
-        arr=Array.isArray(arr)?arr:[]; arr.push(quiz); set(refQ, arr);
-      });
-    }
-
-    // === QUESTIONNAIRE AVEC BLANCS ===
-    function startWhiteQuiz(){
-      let qs = [];
-      for(let t=1; t<=12; t++)
-        for(let i=1;i<=12;i++)
-          qs.push({t,i, blank:Math.random()<.38 });
-      content.innerHTML=`
-        <h2 style="color:var(--accent);font-family:var(--font-title);">Complète les blancs</h2>
-        <form id="whiteForm" class="glass" style="margin:34px auto;max-width:660px;padding:38px;">
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;">
-            ${qs.map((q,j)=>q.blank?
-              `<input type="number" name="white${j}" style="font-size:1.08rem;padding:11px;border-radius:7px;" placeholder="${q.t} × ${q.i}" required="required" data-resp="${q.t*q.i}"/>`
-              : `<span style="padding:13px;font-size:1.13rem;color:var(--brique);">${q.t} × ${q.i} = <b>${q.t*q.i}</b></span>`
-              ).join("")}
-          </div>
-          <button class="glass-btn" style="margin:auto;margin-top:24px;">Vérifier</button>
-        </form>
-      `;
-      document.getElementById("whiteForm").onsubmit=(e)=>{
-        e.preventDefault();
-        let inputs = Array.from(document.querySelectorAll("#whiteForm input[type='number']"));
-        let good=0;
-        for(let inp of inputs){
-          if(+inp.value==+inp.dataset.resp){
-            inp.style.boxShadow = "0 0 11px #199f23b6";
-            inp.style.background = "#e6f6ed";
-            good++;
-          }else{
-            inp.style.boxShadow = "0 0 12px #e93434ba";
-            inp.style.background = "#f19c93";
-          }
-        }
-        setTimeout(()=>{switchPage("apprentissage");}, 1700);
-      };
-    }
-
-    // === MODE CARTES ===
-    let cardStack = [], cardIndex = 0, cardFlipped = false;
-    function startCardMode(){
-      cardStack = [];
-      for(let i=1;i<=12;i++) for(let j=1;j<=12;j++) cardStack.push([i,j]);
-      cardStack = cardStack.sort(()=>Math.random()-.5);
-      cardIndex=0; cardFlipped=false;
-      renderCard();
-    }
-    function renderCard(){
-      let [a,b] = cardStack[cardIndex];
-      content.innerHTML = `
-        <div class="card-mode">
-          <div class="flip-card ${cardFlipped?'flipped':''}" onclick="flipCard()">
-            <div class="card-front">${a} × ${b}</div>
-            <div class="card-back">${a*b}</div>
-          </div>
-          <div class="card-arrows">
-            <button onclick="prevCard(event)">&lt;</button>
-            <button onclick="nextCard(event)">&gt;</button>
-          </div>
-        </div>
-      `;
-    }
-    window.flipCard = ()=>{cardFlipped=!cardFlipped; renderCard();};
-    window.nextCard = (e)=>{ if(e) e.stopPropagation(); if(cardIndex<cardStack.length-1){cardIndex++;cardFlipped=false;renderCard();}};
-    window.prevCard = (e)=>{ if(e) e.stopPropagation(); if(cardIndex>0){cardIndex--;cardFlipped=false;renderCard();}}
-
-    // === SUIVI - HISTORIQUE, STATISTIQUES AVANCÉES, ERREURS, POURCENTAGE, FAIBLESSES...
-    function renderSuivi(){
-      const uid = auth.currentUser.uid, refQ=ref(db,'quizz/'+uid+'/');
-      get(refQ).then(snapshot=>{
-        let quizz = snapshot.exists()?snapshot.val():[]; quizz = Array.isArray(quizz)?quizz:[];
-        let html = `<h1 style="color:var(--accent);font-size:2rem;">Suivi</h1>
-        <div class="glass" style="margin:24px 0 34px 0;padding:37px 35px;">
-          <div style="font-size:1.15rem;color:var(--accent);margin-bottom:9px;">Historique des quizz</div>
-          <table style="width:100%;border-collapse:collapse;">
-          <tr style="color:var(--accent);font-size:1.03rem;"><th>Date</th><th>Score</th><th>Temps Out</th><th>Sans faute</th></tr>
-          `+quizz.map(q=>{
-            let ok=q.results.filter(x=>x.ok&&!x.timeout).length, total=q.results.length;
-            return `<tr style="text-align:center;color:var(--brique);">
-              <td>${new Date(q.date).toLocaleString('fr-FR')}</td>
-              <td><b>${ok} / ${total}</b></td>
-              <td>${q.results.filter(x=>x.timeout).length}</td>
-              <td>${ok===total ? "✅" : ""}</td>
-            </tr>`;
-          }).reverse().join("")+`</table></div>`;
-        // --- Stats détaillées
-        let rawStats = computeStats(quizz);
-        html+=`
-        <div style="display:flex;gap:32px;flex-wrap:wrap;">
-          <div class="glass" style="flex:1;min-width:260px;max-width:400px;padding:33px 19px;text-align:center;">
-            <div style="font-size:1.33rem;font-family:var(--font-title);">Pourcentage de maîtrise<br>des tables</div>
-            <div style="font-size:3.1rem;color:var(--accent);margin:14px 0 16px 0;">${rawStats.percentConnu}%</div>
-            <div style="color:var(--brique);font-size:.99rem;">${rawStats.details}</div>
-          </div>
-          <div class="glass" style="flex:1;min-width:260px;max-width:400px;padding:33px 21px;text-align:center;">
-            <div style="font-size:1.2rem;color:var(--accent);margin-bottom:13px;">Tes tables les moins connues&nbsp;:</div>
-            <div style="font-size:1.03rem;">
-              ${rawStats.leastTables.length?rawStats.leastTables.map(t=>"Table "+t).join(", ") : "—"}
-            </div>
-            <div style="font-size:1.18rem;margin:18px 0 10px 0;color:var(--accent);">Multiplications les plus ratées</div>
-            <div style="font-size:1rem;">${rawStats.worstMult.length?rawStats.worstMult.join(", ") : "—"}</div>
-            <div style="font-size:1.18rem;margin:18px 0 10px 0;color:var(--accent);">Celle que tu connais le mieux</div>
-            <div style="font-size:1.1rem;">${rawStats.bestMult?rawStats.bestMult:"—"}</div>
-          </div>
-        </div>
-        `;
-        content.innerHTML = html;
-      });
-    }
-    function computeStats(quizz){
-      if(!quizz||!quizz.length) return {percentConnu:0, leastTables:[], details:'Aucun quiz réalisé.', worstMult:[], bestMult:null};
-      let tablesStats = {}, multStats = {};
-      quizz.forEach(q=>{
-        q.results.forEach(({q:[a,b],ok})=>{
-          tablesStats[a]=tablesStats[a]||{ok:0,tot:0};
-          tablesStats[a].tot++; if(ok) tablesStats[a].ok++;
-          let key=a+"×"+b; multStats[key]=multStats[key]||{ok:0,tot:0};
-          multStats[key].tot++; if(ok) multStats[key].ok++;
-        });
-      });
-      let mastered=0, weakest=[], best='', bestOk=0, bestTot=0;
-      let minOk = Infinity, worstMults=[];
-      for(let i=1;i<=12;i++){
-        if(tablesStats[i] && tablesStats[i].ok>=5) mastered++;
-        if(tablesStats[i] && tablesStats[i].ok < Math.max(5, tablesStats[i].tot*.5)) weakest.push(i);
-      }
-      Object.entries(multStats).forEach(([key,val])=>{
-        if(val.ok < minOk) { minOk=val.ok; worstMults=[key]; }
-        else if(val.ok===minOk) worstMults.push(key);
-        if(val.ok > bestOk || (val.ok==bestOk && val.tot>bestTot)) {bestOk=val.ok; bestTot=val.tot; best=key;}
-      });
-      return {
-        percentConnu: Math.round((mastered/12)*100),
-        leastTables: weakest,
-        details: mastered===12 ? "Bravo, toutes les tables sont maîtrisées !" : `${mastered} sur 12 parfaitement maîtrisées (≥5 quiz sans faute).`,
-        worstMult: worstMults.slice(0,3),
-        bestMult: best
-      };
-    }
-
-    // === PARAMÈTRES : THÈME, NOM UTILISATEUR, RESET PROG + AUTRES REGLAGES ===
-    function renderParametres(){
-      const uid = auth.currentUser.uid, settingsRef=ref(db,'settings/'+uid+'/');
-      get(settingsRef).then(snap=>{
-        let sett = snap.exists()?snap.val():{userName:"", theme:"beige-brique"};
-        let html = `
-        <h1 style="color:var(--accent);font-size:2rem;">Paramètres</h1>
-        <form id="paramForm" class="glass glass-form" style="max-width:435px;margin:auto;padding:39px 34px;">
-        <div style="font-weight:bold;font-size:1.14rem;color:var(--accent);margin-bottom:18px;">Profil</div>
-        <input type="text" id="setUserName" style="font-size:1.08rem;" placeholder="Nom d'utilisateur" value="${sett.userName||""}" required/>
-        <div style="margin-top:10px;font-weight:bold;font-size:1.12rem;color:var(--accent);">Apparence</div>
-        <select id="setTheme" style="font-size:1.05rem;margin-bottom:20px;">
-          <option value="beige-brique"${sett.theme==="beige-brique"?" selected":""}>Beige brique (recommandé)</option>
-          <option value="classic">Classique minimal</option>
-        </select>
-        <div style="font-weight:bold;font-size:1.1rem;margin-top:18px;margin-bottom:5px;color:var(--accent);">Autres paramètres</div>
-        <div><input type="checkbox" id="musicEnable" ${sett.music?"checked":""}> <label for="musicEnable">Musique relax intégrée (prochainement)</label></div>
-        <div class="param-saved" id="paramSaved">✅ Modifications enregistrées.</div>
-        <button class="glass-btn" type="submit">Enregistrer</button>
-        </form>
-        <div style="text-align:right;">
-          <button class="glass-btn" style="margin-top:25px;background: #cfaca0;color:#a13700;" onclick="resetConfirm()">Réinitialiser la progression</button>
-        </div>
-        `;
-        content.innerHTML = html;
-        const paramForm = document.getElementById("paramForm");
-        paramForm.onsubmit=(e)=>{
-          e.preventDefault();
-          update(settingsRef, { userName: document.getElementById("setUserName").value, theme: document.getElementById("setTheme").value, music:document.getElementById("musicEnable").checked });
-          // Feedback anim
-          document.getElementById("paramSaved").style.display="block";
-          setTimeout(()=>{document.getElementById("paramSaved").style.display="none";},1900);
-        };
-      });
-    }
-    window.resetConfirm = ()=>{
-      showConfirm("Voulez-vous vraiment réinitialiser toute votre progression ? Cette action est irréversible.", ()=>{
-          const uid = auth.currentUser.uid;
-          set(ref(db,'quizz/'+uid+'/'),[]);
-          set(ref(db,'settings/'+uid+'/'),{});
-          switchPage('suivi');
-      });
+      update(settingsRef, { userName: document.getElementById("setUserName").value.trim() });
     };
-    function showConfirm(msg, yes){
-      let box = document.getElementById("confirmBox");
-      document.getElementById("confirmMsg").innerText = msg;
-      box.style.display = "flex";
-      document.getElementById("confirmYes").onclick = ()=>{ box.style.display="none"; yes(); };
-      document.getElementById("confirmNo").onclick = ()=>{ box.style.display="none"; };
+  });
+}
+window.showResetConfirm = ()=>{
+  showConfirm("Voulez-vous vraiment réinitialiser toute votre progression ? Cette action est irréversible.",
+    ()=>{
+      const uid = auth.currentUser.uid;
+      set(ref(db,'quizz/'+uid+'/'),[]); set(ref(db,'settings/'+uid+'/'),{});
+      renderSuivi();
     }
-    renderPage("tables");
-  </script>
+  );
+};
+function showConfirm(msg, yes){
+  const confirmLayer=document.getElementById("confirmLayer");
+  confirmLayer.innerHTML = `<div class="confirm-box">${msg}<br>
+    <button class="save-btn" id="yesBtn">Oui</button>
+    <button class="reset-btn" id="noBtn">Non</button>
+  </div>`;
+  confirmLayer.classList.remove("hidden");
+  document.getElementById("yesBtn").onclick=()=>{confirmLayer.classList.add("hidden");yes();};
+  document.getElementById("noBtn").onclick=()=>{confirmLayer.classList.add("hidden");};
+}
+renderPage("tables");
+</script>
 </body>
 </html>
