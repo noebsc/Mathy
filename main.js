@@ -89,7 +89,7 @@ window.showTablesStatsMenu = async function(){
       <span class="sideprogress">${masteryByTable[i]+"%"}</span>
       </button>`;
     }
-    document.getElementById("side-table-list").innerHTML = lst;
+    document.getElementById("side-table-list").innerHTML = "";
   });
 };
 window.switchPageTable=(i)=>{
@@ -343,9 +343,11 @@ window.showCard = function(){
   const apprZone = document.getElementById('apprZone');
   apprZone.innerHTML=`
     <div class="card-zone">
-      <div class="card3D${window.cardFlipped ? ' flipped':''}" onclick="window.flipCard()">
-        <div class="card-flip-side card-flip-front" style="z-index:${window.cardFlipped?1:2};display:${window.cardFlipped?'none':'flex'}">${a} × ${b}</div>
-        <div class="card-flip-side card-flip-back" style="z-index:${window.cardFlipped?2:1};display:${window.cardFlipped?'flex':'none'}">${a*b}</div>
+      <div class="card3D${window.cardFlipped ? ' flipped':''}" onclick="window.flipCard()" style="position:relative;">
+        ${window.cardFlipped
+          ? `<div class="card-flip-side card-flip-back" style="display:flex;">${a} × ${b} = <b style="font-size:2.4rem;margin-left:10px;">${a*b}</b></div>`
+          : `<div class="card-flip-side card-flip-front" style="display:flex;">${a} × ${b}</div>`
+        }
       </div>
       <div class="card-arrows">
         <button onclick="window.prevCard(event)" ${window.cardIndex===0?'disabled':''}>&lt;</button>
