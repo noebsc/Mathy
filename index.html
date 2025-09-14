@@ -4,191 +4,267 @@
   <meta charset="UTF-8">
   <title>Mathy by Noé</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Styles très simples et épurés, BEIGE BRIQUE seul, police système -->
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --beige: #f5ead0;
+      --beige: #f8f2e7;
+      --beige2: #efe0cd;
       --brique: #cb9161;
-      --beigeDark: #ddc6a3;
       --accent: #af6a3a;
-      --border: #cba582;
-      --text: #473423;
-      --radius: 12px;
-      --shadow: 0 2px 10px #ccb49330;
+      --accent2: #e8b183;
+      --text: #3c2a17;
+      --border: #e0c6b0;
+      --bg-btn: #fff9f2;
+      --success: #4be37b;
+      --error: #ff8585;
+      --radius: 18px;
+      --shadow: 0 6px 40px #dbc4a630, 0 2px 7px #f7e4c999;
       --transition: .22s cubic-bezier(.40,.48,.39,.94);
+      --transition-btn: .19s cubic-bezier(.54,.17,.20,1.23);
     }
     body {
-      background: var(--beige);
-      min-height: 100vh;
-      margin: 0;
-      font-family: system-ui, Arial, sans-serif;
+      background: linear-gradient(125deg, var(--beige) 80%, var(--brique) 220%);
+      min-height: 100vh; margin: 0;
+      font-family: 'Inter', system-ui, Arial, sans-serif;
       color: var(--text);
+      letter-spacing: 0.01em;
     }
     header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 3vw; border-bottom: 1px solid var(--border);
-      background: var(--beigeDark);
+      background: var(--beige2);border-bottom:1px solid var(--border);
+      padding: 14px 3vw 13px 3vw; min-height:54px;
     }
-    .left {
-      display:flex;align-items:center;gap:20px;
+    .header-left {
+      display: flex; align-items: center; gap: 23px;
     }
     .burger {
-      width:40px;height:40px;display:flex;align-items:center;cursor:pointer;
-      background:var(--beige);border-radius:10px;justify-content:center;border:1px solid var(--border);
-      transition:box-shadow var(--transition);
+      width: 46px;height: 46px;display:flex;align-items:center;cursor:pointer;
+      background:var(--beige);border-radius:50%;justify-content:center;
+      border:2px solid var(--border);transition:box-shadow var(--transition);
+      box-shadow:0 4px 15px #c8ac8c22;
     }
-    .burger span,.burger span:before,.burger span:after{
-      display:block;height:4px;width:24px;border-radius:2px;background:var(--accent);
-      position:relative;transition:var(--transition)
+    .burger span, .burger span:before, .burger span:after {
+      content:'';display:block;height:4px;width:26px;border-radius:2px;background:var(--accent);
+      position:relative;transition:var(--transition);
     }
-    .burger span:before{content:"";position:absolute;top:-7px;}
-    .burger span:after{content:"";position:absolute;top:7px;}
+    .burger span:before{content:"";position:absolute;top:-8px;}
+    .burger span:after{content:"";position:absolute;top:8px;}
     .burger.open span{background:transparent;}
     .burger.open span:before{top:0;transform:rotate(45deg);}
     .burger.open span:after{top:0;transform:rotate(-45deg);}
-    .title-mathy{font-weight:bold;font-size:1.8rem;color:var(--accent);}
-    .by-noe{font-size:.95rem;color:#a17657;margin-left:8px;font-weight:normal;}
+    .title-mathy {
+      font-weight: 800; font-size: 1.85rem; color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .by-noe {
+      font-size: 1rem; color: #987155;margin-left:7px;
+      font-weight: 400;opacity:.83;
+    }
     nav.sidebar {
-      position:fixed;top:0;left:-230px;height:100vh;width:200px;z-index:9;
-      background:var(--beigeDark);border-right:1px solid var(--border);
-      display:flex;flex-direction:column;gap:10px;padding-top:70px;
+      position:fixed;top:0;left:-265px;height:100vh;width:220px;z-index:11;
+      background:var(--beige2);
+      border-right:1.8px solid var(--border);
+      display:flex;flex-direction:column;gap:18px;padding-top:65px;
+      box-shadow:0 0 56px #ae724a20;
       transition:left var(--transition);
-      box-shadow:0 2px 16px #ad957530;
     }
     nav.sidebar.open { left:0; }
     nav.sidebar button {
-      background:none;border:none;font:600 1.12rem system-ui;
-      color:var(--accent);padding:12px 28px;text-align:left;cursor:pointer;
-      border-radius:var(--radius);
-      transition:background var(--transition),color var(--transition);
+      border:none;background:none;
+      color:var(--accent);font:700 1.18rem 'Inter',sans-serif;padding:15px 22px;
+      border-radius: var(--radius);
+      transition: 
+        background var(--transition-btn), color var(--transition-btn),
+        transform var(--transition-btn), box-shadow var(--transition-btn);
+      margin-right:10px;cursor:pointer;
+      margin-bottom:2px;
+      outline:none;
     }
     nav.sidebar button.active,
-    nav.sidebar button:hover {background:var(--accent);color:#fff;}
-    nav.sidebar button:last-child {margin-top:auto;color:#903a10;}
-    main.content {
-      margin:32px 3vw;min-height:60vh;max-width:900px;
-      transition:margin var(--transition);
+    nav.sidebar button:hover {
+      background: linear-gradient(95deg, var(--accent2) 60%, var(--brique) 180%);
+      color:#fff;
+      transform:translateX(7px) scale(1.08);
+      box-shadow:0 1px 8px #c06c2e15;
     }
-    @media (max-width:600px){main.content{margin:24px 2vw;} nav.sidebar{width:90vw;max-width:290px;left:-93vw;}}
-    /* Anim rapides utiles */
-    .fade { animation:fade .2s linear; }
-    @keyframes fade { from {opacity:0;transform:translateY(18px);} to{opacity:1;transform:translateY(0);} }
-    /* TABLES */
+    nav.sidebar button[data-page]{font-size:1.13rem;}
+    nav.sidebar button.logout {margin-top:auto;background:#fff1e0;color:#c7420b;font-size:1.05rem;border:2px solid #c7420b;}
+    /* -------- Layout -------- */
+    main.content {margin:34px auto 32px auto;min-height:60vh;max-width:970px;}
+    @media (max-width:700px){main.content{margin:24px 3vw;}}
+    .fade { animation:fade .18s linear; }
+    @keyframes fade { from {opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);} }
+    /* -------- Modern BUTTONS -------- */
+    .btn, button.save-btn, button.main-btn, button.mode-btn, button.quiz-btn {
+      border: none;
+      outline: none;
+      background: linear-gradient(95deg,var(--beige2),var(--beige));
+      color: var(--accent);
+      padding: 15px 36px;
+      font-size: 1.22rem;
+      border-radius: var(--radius);
+      font-weight: 700;
+      box-shadow: 0 3px 13px #d3b68527;
+      cursor: pointer;
+      transition: 
+        background .24s cubic-bezier(.4,.8,.3,1.1),
+        color .2s,box-shadow .15s, transform .17s cubic-bezier(.25,.9,.27,1.02)
+      ;
+      margin:9px 12px 14px 0; 
+      margin-bottom:16px;
+      min-width:145px;
+    }
+    .btn:active, button.save-btn:active, button.main-btn:active, button.mode-btn:active, button.quiz-btn:active {
+      transform:scale(.96);
+      background:var(--accent2);
+      color:#fff;
+    }
+    .btn:hover,button.save-btn:hover,button.main-btn:hover,button.mode-btn:hover,button.quiz-btn:hover {
+      background: linear-gradient(100deg, var(--brique) 70%, var(--accent2));
+      color:#fff;box-shadow:0 8px 31px #cb916135;
+    }
+    /* -------- TABLES -------- */
     .tables-grid {
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:22px;margin:25px 0 0 0;
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:25px;margin:27px 0 0 0;
     }
     .table-multi {
-      border:1.5px solid var(--border);border-radius:10px;padding:11px 8px 8px 8px;
-      background:#fff;transition:box-shadow .18s;
-      cursor:pointer;text-align:center;
-      box-shadow:var(--shadow);
-      font-size:1.18rem;
+      border:2.5px solid var(--border);border-radius:var(--radius);padding:13px 8px 8px 8px;
+      background:#fff;box-shadow:var(--shadow);transition:transform .15s,border .15s,background .15s;
+      cursor:pointer;text-align:center;font-size:1.15rem;
     }
-    .table-multi.selected,.table-multi:hover { border:1.8px solid var(--accent);box-shadow:0 3px 10px #cb91615d; background:#fffcf6;}
-    /* Zoom Table plein écran */
+    .table-multi.selected,.table-multi:hover {
+      border:2.5px solid var(--accent);background:linear-gradient(110deg,#fffefb,#f3dec1 98%);
+      transform:scale(1.036);
+    }
+    /* Zoom Table */
     .zoom-table-bg {
-      position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.16);
-      z-index:20;display:flex;align-items:center;justify-content:center;
+      position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.14);
+      z-index:21;display:flex;align-items:center;justify-content:center;
+      backdrop-filter:blur(2px);
+      animation:fade .14s;
     }
     .zoom-table {
-      background:#fff;border-radius:18px;box-shadow:0 6px 40px #b4854b23;
-      padding:32px 38px;margin:0;
-      font-size:1.21rem;max-width:95vw;
-      border:2.5px solid var(--accent);
+      background:#fff;border-radius:28px;box-shadow:0 8px 42px #b4854b33;
+      padding:38px 56px;font-size:1.21rem;max-width:96vw;min-width:200px;
+      border:2.5px solid var(--accent); text-align:center;
     }
-    /* QUIZ */
-    .quiz-select {
-      display:flex;flex-wrap:wrap;gap:10px 24px;margin:18px 0 25px 0;
-    }
+    /* -------- QUIZ TABLE SELECT -------- */
+    .quiz-select {display:flex;flex-wrap:wrap;gap:11px;margin:20px 0 10px 0;}
     .select-table {
-      padding:5px 14px;border-radius:8px;border:1.3px solid var(--accent);
-      background:#f9ecdb;cursor:pointer;margin-bottom:6px;
-      font-size:1rem;transition:background .16s;
-      display:flex;align-items:center;gap:7px;
+      padding:7px 21px 7px 9px;border-radius:var(--radius);font-weight:600;
+      border:2px solid var(--border);
+      background:var(--bg-btn);cursor:pointer;
+      font-size:1.08rem;transition:background .14s,border .17s;
+      display:flex;align-items:center;gap:9px;color:var(--accent);user-select:none;
     }
-    .select-table.selected, .select-table:active {
-      background:var(--accent);color:#fff!important;border:1.5px solid var(--accent);
+    .select-table.selected{
+      background:linear-gradient(110deg,var(--brique) 40%,var(--accent2) 120%);
+      color:#fff;border:2.2px solid var(--accent);
+      transform:scale(1.06);
     }
-    .select-table input[type="checkbox"]{margin-right:.6em;}
-    /* ProgressBar */
+    .select-table input[type="checkbox"]{accent-color:var(--accent);}
+    /* -------- ProgressBar -------- */
     .progress-bar {
-      height:9px;background:#ecd4ae;border-radius:5px;width:270px;max-width:96vw;overflow:hidden;margin:0 auto 14px auto;
-      border:1px solid var(--brique);
+      height:14px;background:#ecd4ae;border-radius:8px;width:310px;max-width:99vw;overflow:hidden;margin:0 auto 14px auto;
+      border:1.5px solid var(--brique);
+      box-shadow:0 2px 10px #e4bc7b3a inset;
     }
-    .bar-inner {background:var(--accent);height:100%;width:100%;transition:width .11s;}
-    /* Input Quiz */
-    .quiz-input {font-size:1.5rem;padding:8px 13px;width:110px;}
-    /* Mode Blancs Multi */
+    .bar-inner {background:linear-gradient(90deg,var(--accent),var(--brique));height:100%;width:100%;transition:width .052s;}
+    /* -------- QUIZ/AUTRES -------- */
+    .quiz-input {font-size:1.42rem;padding:9px 17px;width:110px;margin:7px;border-radius:12px;border:1.7px solid var(--border);}
     .blanks-grid {
-      display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
-      margin-top:23px;background:#fff;border-radius:12px;padding:22px 7px;
-      border:1.5px solid var(--border);
+      display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:23px;background:#fff;border-radius:18px;padding:22px 10px 12px 10px;
+      border:2px solid var(--border); box-shadow:var(--shadow);
     }
-    .blank-box {font-size:1.09rem;}
+    @media (max-width:780px){.blanks-grid{grid-template-columns:repeat(2,1fr);}}
+    .blank-box {font-size:1.08rem;}
     .blank-answer {
-      width:52px;font-size:1.19rem;text-align:center;margin:0 4px 0 0;
-      border:1.2px solid #bdbdbd;border-radius:6px;padding:4px 2px;
+      width:60px;font-size:1.18rem;text-align:center;margin:0 4px 0 0;
+      border:1.6px solid #dfbc9f;border-radius:12px;padding:5px 2px;outline:none;
+      transition:background .13s,border .15s;
     }
-    .blank-correct{background:#d4f4da;border:1.5px solid #49b26b;}
-    .blank-wrong{background:#fae4db;border:1.5px solid #d46c5d;}
-    .correction-row {font-size:0.91rem;color:var(--accent);}
-    /* Mode Cartes */
+    .blank-correct{background:#d6f7e2;border:1.7px solid #2ba865;}
+    .blank-wrong{background:#fae8e4;border:1.8px solid #cb3d26;}
+    .correction-row {font-size:1.01rem;color:var(--accent);}
+    /* -------- MODE CARTES -------- */
     .card-zone {margin-top:40px;display:flex;flex-direction:column;align-items:center;}
-    .card-flip{
-      height:130px;width:260px;display:flex;align-items:center;justify-content:center;
-      border-radius:16px;background:#fff;font-size:2rem;color:var(--accent);
-      border:2.5px solid var(--accent);cursor:pointer;
-      perspective:800px;position:relative;transition:box-shadow .19s;
-      margin-bottom:18px;box-shadow:0 6px 26px #b4854b19;}
-    .flip-animate {
-      animation:flipAnim .26s cubic-bezier(.77,0,.23,1.06);
-      transform:rotateY(180deg) scale(1.05);
+    .card3D {height:150px;width:290px;display:flex;align-items:center;justify-content:center;
+      border-radius:24px;background:#fff;font-size:2.16rem;color:var(--accent);
+      border:2.5px solid var(--accent);box-shadow:0 8px 32px #b4854b14;
+      cursor:pointer;perspective:900px; position:relative; transition: box-shadow .12s;
+      margin-bottom:22px;
+      font-family:'Inter',sans-serif; user-select:none;}
+    .card-flip-side {position:absolute;top:0;left:0;width:100%;height:100%;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+    .card-flip-front {z-index:1;}
+    .card-flip-back {z-index:2;transform:rotateY(180deg);}
+    .card3D.flipped {animation: cardFlipA .3s cubic-bezier(.59,-.06,.37,1.23) both;}
+    @keyframes cardFlipA {
+      0%{transform:rotateY(0);}
+      100%{transform:rotateY(180deg);}
     }
-    @keyframes flipAnim {0%{transform:rotateY(0);opacity:.7;}70%{transform:rotateY(180deg) scale(1.13);}90%{transform:rotateY(162deg);} 100%{transform:rotateY(180deg) scale(1.05);}}
-    .card-arrows {display:flex;gap:22px;margin-top:12px;}
+    .card3D .card-flip-side {
+      font-size:2.16rem;color:var(--accent);
+      background:#fff;border-radius:inherit;width:100%;height:100%;
+      display:flex;align-items:center;justify-content:center;
+      transition:color .13s;
+    }
+    .card-flip-back {color:#fff;background:linear-gradient(93deg,var(--brique) 70%,var(--accent));}
+    .card-arrows {display:flex;gap:28px;margin-top:18px;}
     .card-arrows button{
-      font-size:1.5rem;padding:7px 23px;background:var(--brique);
-      color:#fff;border:none;border-radius:8px;cursor:pointer;transition:background .18s;}
-    .card-arrows button:disabled {background:#e0c0a6;color:#cb9161;}
-    /* Suivi */
-    .main-stats{display:flex;flex-wrap:wrap;gap:28px;margin-top:18px;}
-    .stat-block {background:#fff;border-radius:10px;box-shadow:var(--shadow);padding:20px 28px;flex:1 1 220px;}
-    .stat-block .num{color:var(--accent);font-weight:bold;font-size:1.75rem;}
-    .stat-title{font-size:1.04rem;margin-bottom:8px;}
-    /* Table historique */
+      font-size:1.52rem;padding:13px 31px;
+      background:linear-gradient(104deg,var(--accent2),var(--brique));
+      color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:700;box-shadow:0 3px 10px #ad7c5420;
+      transition:background .19s, color .143s, transform .13s;}
+    .card-arrows button:active{background:var(--accent);}
+    .card-arrows button:disabled{background:#e0c0a6;color:#cb9161;}
+    /* -------- MODES LUDIQUES --------- */
+    .modes-flex {display:flex;flex-wrap:wrap;gap:18px;margin:12px 0 18px 0;}
+    .mode-btn {
+      min-width:180px;max-width:97vw;
+      background:linear-gradient(105deg,var(--beige2),var(--beige));
+      color:var(--accent);border-radius:var(--radius);
+      font-weight:700;font-size:1.19rem;padding:14px 22px;margin:0 6px 6px 0;
+      border:2px solid var(--border);
+      cursor:pointer;transition:background .19s,border .17s,color .17s,transform .16s;
+    }
+    .mode-btn:hover{background:linear-gradient(95deg,var(--brique) 70%,var(--accent2));color:#fff;border:2.5px solid var(--accent);}
+    /* -------- Suivi -------- */
+    .main-stats{display:flex;flex-wrap:wrap;gap:32px 18px;margin-top:18px;}
+    .stat-block {background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:22px 34px;flex:1 1 225px;}
+    .stat-block .num{color:var(--accent);font-weight:bold;font-size:1.85rem;}
+    .stat-title{font-size:1.11rem;margin-bottom:7px;}
     .suivi-table {width:100%;border-collapse:collapse;}
-    .suivi-table th, .suivi-table td {padding:6px 12px;text-align:center;}
-    .suivi-table th {background:var(--beigeDark);}
+    .suivi-table th, .suivi-table td {padding:9px 14px;text-align:center;font-size:1.08rem;}
+    .suivi-table th {background:var(--beige2);}
     .suivi-table td {background:#fff;}
-    /* Paramètres */
-    .param-form {max-width:380px;margin:0 auto;}
-    .param-form input[type="text"]{width:100%;padding:9px 12px;font-size:1.08rem;margin-bottom:14px;border:1px solid #bdbdbd;border-radius:8px;}
-    .param-btns{display:flex;gap:14px;justify-content:space-between;margin-top:18px;}
+    /* -------- Paramètres -------- */
+    .param-form {max-width:420px;margin:0 auto;}
+    .param-form input[type="text"]{width:99%;padding:13px 14px;font-size:1.08rem;margin-bottom:18px;border:1.7px solid #d0b19b;border-radius:var(--radius);}
+    .param-btns{display:flex;gap:14px;justify-content:space-between;margin-top:16px;}
     .reset-btn {
-      background:#fff;color:#af4a0a;padding:11px 22px;border:1.5px solid #af4a0a;
-      border-radius:9px;cursor:pointer;font-weight:bold;transition:background .12s;}
-    .reset-btn:hover{background:#af4a0a;color:#fff;}
-    .save-btn{background:var(--accent);color:#fff;}
+      background:#fff;color:#cb3d26;padding:14px 28px;border:2px solid #cb3d26;
+      border-radius:var(--radius);cursor:pointer;font-weight:700;transition:background .14s, color .14s;
+    }
+    .reset-btn:hover{background:#cb3d26;color:#fff;}
+    .save-btn{background:linear-gradient(98deg,var(--accent2) 67%,var(--brique));
+      color:#fff; font-weight:700;border:none;box-shadow:0 4px 20px #cfa7753d;}
+    .save-btn:hover{background:linear-gradient(100deg,var(--brique),var(--accent2));}
     .confirm-layer{
-      position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.22);
-      display:flex;align-items:center;justify-content:center;z-index:50;
+      position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.19);
+      display:flex;align-items:center;justify-content:center;z-index:51;
     }
     .confirm-box{
-      background:#fff;padding:30px 40px;border-radius:14px;box-shadow:0 8px 30px #ad957550;
-      text-align:center;min-width:230px;
+      background:#fff;padding:38px 56px;border-radius:18px;box-shadow:0 17px 90px #ad957570;
+      text-align:center;min-width:220px;
     }
-    .confirm-box button{margin:10px 24px 0 24px;}
+    .confirm-box button{margin:10px 32px 0 32px;}
     .hidden {display:none;}
-    /* Mobile */
-    @media (max-width:400px){
-      .blanks-grid{grid-template-columns:repeat(2,1fr);}
-      .card-flip{width:98vw;min-width:148px;}
-    }
   </style>
 </head>
 <body>
   <header>
-    <div class="left">
+    <div class="header-left">
       <div class="burger" id="burger"><span></span></div>
       <span class="title-mathy">Mathy</span>
       <span class="by-noe">by Noé</span>
@@ -199,22 +275,21 @@
     <button data-page="apprentissage">Apprentissage</button>
     <button data-page="suivi">Suivi</button>
     <button data-page="parametres">Paramètres</button>
-    <button id="logoutBtn">Déconnexion</button>
+    <button class="logout" id="logoutBtn">Déconnexion</button>
   </nav>
   <main class="content fade" id="content"></main>
   <div id="confirmLayer" class="hidden"></div>
-  <div id="authModal" style="position:fixed;z-index:1000;top:0;left:0;right:0;bottom:0; background:#f5ead0;display:flex;align-items:center;justify-content:center;">
-    <form id="authForm" style="background:#fff;padding:33px 28px;border-radius:12px;box-shadow:0 5px 35px #bca57e30;display:flex;flex-direction:column;gap:17px;min-width:250px;">
-      <h2 style="font-size:1.3rem;color:var(--accent);margin:0 0 14px 0;">Connexion à Mathy</h2>
-      <input type="email" id="email" placeholder="Adresse e-mail" required autocomplete="email" style="font-size:1.03rem;padding:10px 5px;border-radius:6px;border:1px solid #cba582;">
-      <input type="password" id="password" placeholder="Mot de passe" required autocomplete="current-password" style="font-size:1.03rem;padding:10px 5px;border-radius:6px;border:1px solid #cba582;">
-      <button style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 0;font-size:1.09rem;cursor:pointer;">Se connecter</button>
+  <div id="authModal" style="position:fixed;z-index:1000;top:0;left:0;right:0;bottom:0; background:#f8f3e5;display:flex;align-items:center;justify-content:center;">
+    <form id="authForm" style="background:#fff;padding:37px 34px;border-radius:14px;box-shadow:0 8px 35px #bca57e32;display:flex;flex-direction:column;gap:19px;min-width:250px;">
+      <h2 style="font-size:1.22rem;color:var(--accent);margin-bottom:7px;">Connexion à Mathy</h2>
+      <input type="email" id="email" placeholder="Adresse e-mail" required autocomplete="email" style="font-size:1.03rem;padding:10px 7px;border-radius:10px;border:1.6px solid #e0c6b0;">
+      <input type="password" id="password" placeholder="Mot de passe" required autocomplete="current-password" style="font-size:1.03rem;padding:10px 7px;border-radius:10px;border:1.6px solid #e0c6b0;">
+      <button class="btn" type="submit">Se connecter</button>
       <div style="font-size:.98rem;text-align:center;">Pas encore inscrit ? <span id="registerLink" style="color:var(--accent);cursor:pointer;text-decoration:underline;">Créer un compte</span></div>
-      <div style="color:#d01f1f;font-size:.97rem;" id="authError"></div>
+      <div style="color:#d01f1f;font-size:1rem;" id="authError"></div>
     </form>
   </div>
 <script type="module">
-// ============== Firebase (v12) ==============
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
@@ -234,9 +309,9 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-// ============= Interface Navigation =============
+// -------- UI NAVIGATION --------
 const burger = document.getElementById("burger"), sidebar = document.getElementById("sidebar"), content = document.getElementById("content");
-burger.onclick = () => { burger.classList.toggle('open'); sidebar.classList.toggle('open'); };
+burger.onclick = () => { burger.classList.toggle('open'); sidebar.classList.toggle('open'); }
 document.body.addEventListener("mousedown", e=>{
   if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !burger.contains(e.target)) {
     burger.classList.remove('open'); sidebar.classList.remove('open');
@@ -251,11 +326,11 @@ function switchPage(page, btn){
   if (btn) btn.classList.add('active');
   currentPage = page;
   content.classList.remove("fade");
-  setTimeout(()=>{ renderPage(page); content.classList.add("fade"); }, 60);
-  if(window.innerWidth<700){ burger.classList.remove('open'); sidebar.classList.remove('open'); }
+  setTimeout(()=>{ renderPage(page); content.classList.add("fade"); }, 25);
+  if(window.innerWidth<740){ burger.classList.remove('open'); sidebar.classList.remove('open'); }
 }
 
-// ============= Authentification =============
+// ======= AUTH =======
 const authModal = document.getElementById("authModal");
 const authForm = document.getElementById("authForm");
 const emailInput = document.getElementById("email");
@@ -286,7 +361,7 @@ onAuthStateChanged(auth, user=>{
 });
 document.getElementById("logoutBtn").onclick = ()=>{ signOut(auth); }
 
-// ============= Pages =============
+// ======= Pages =======
 function renderPage(page){
   if (page==="tables") renderTables();
   else if (page==="apprentissage") renderApprentissage();
@@ -294,13 +369,13 @@ function renderPage(page){
   else if (page==="parametres") renderParametres();
 }
 
-// ----------- TABLES MULTIPLICATION -----------
+// ---------- TABLES ----------
 function renderTables(){
-  let html = `<h1 style="font-size:1.4rem;color:var(--accent);margin:0 0 7px 0;">Toutes les tables de multiplication</h1>
+  let html = `<h1 style="font-size:1.4rem;color:var(--accent);margin:0 0 10px 0;font-weight:800;">Tables de multiplication</h1>
     <div class="tables-grid">`;
   for(let t=1;t<=12;t++){
-    html+=`<div class="table-multi" onclick="showTableZoom(${t})" id="t${t}">
-      <div style="font-weight:bold;color:var(--accent);font-size:1.12rem;">Table de ${t}</div>
+    html+=`<div class="table-multi" onclick="window.showTableZoom(${t})" id="t${t}">
+      <div style="font-weight:700;color:var(--accent);font-size:1.12rem;">Table de ${t}</div>
       <div>`;
     for(let i=1;i<=12;i++){ html += `<div>${t} × ${i} = <b>${t*i}</b></div>`;}
     html+=`</div></div>`;
@@ -312,20 +387,21 @@ window.showTableZoom = function(n){
   const overlay=document.createElement('div');
   overlay.className='zoom-table-bg';
   overlay.onclick=e=>{if(e.target===overlay)overlay.remove();}
-  let html = `<div class="zoom-table"><h2 style="color:var(--accent);font-size:1.31rem;margin:0 0 8px 0;">Table de ${n}</h2>`;
+  let html = `<div class="zoom-table"><h2 style="color:var(--accent);font-size:1.35rem;font-weight:700;margin:0 0 10px 0;">Table de ${n}</h2>`;
   for(let i=1;i<=12;i++) html+=`<div>${n} × ${i} = <b>${n*i}</b></div>`;
   html+=`</div>`;
   overlay.innerHTML=html;document.body.appendChild(overlay);
 }
 
-// ----------- APPRENTISSAGE (MODES) -----------
+// ---------- APPRENTISSAGE / MODES ----------
 function renderApprentissage(){
   content.innerHTML=`
-    <h1 style="font-size:1.25rem;color:var(--accent);">Apprentissage</h1>
-    <div style="margin:15px 0 22px 0;display:flex;gap:20px;flex-wrap:wrap;">
-      <button class="save-btn" style="padding:12px 25px;" onclick="selectQuizTables()">Quiz</button>
-      <button class="save-btn" style="padding:12px 25px;" onclick="renderBlanksQuiz()">Tables à trous</button>
-      <button class="save-btn" style="padding:12px 25px;" onclick="renderCardMode()">Mode cartes</button>
+    <h1 style="font-size:1.27rem;color:var(--accent);font-weight:800;">Apprentissage</h1>
+    <div class="modes-flex">
+      <button class="mode-btn" onclick="window.selectQuizTables()">Quiz</button>
+      <button class="mode-btn" onclick="window.renderBlanksQuiz()">Tables à trou</button>
+      <button class="mode-btn" onclick="window.renderCardMode()">Mode cartes</button>
+      <button class="mode-btn" onclick="window.renderDefiRapide()">Défi rapide</button>
     </div>
     <div id="apprZone"></div>
   `;
@@ -333,13 +409,14 @@ function renderApprentissage(){
 window.selectQuizTables = function(){
   let tables = '';
   for(let i=1;i<=12;i++)
-    tables += `<label class="select-table" id="qsel${i}" onclick="event.preventDefault();toggleQuizTable(${i})">
+    tables += `<label class="select-table" id="qsel${i}" onclick="event.preventDefault();window.toggleQuizTable(${i})">
       <input type="checkbox" id="ch${i}" value="${i}" checked style="pointer-events:none;"> ${i}
     </label>`;
   document.getElementById('apprZone').innerHTML = `
     <div><b>Choisis les tables à travailler :</b></div>
     <div class="quiz-select">${tables}</div>
-    <button onclick="startQuiz()" class="save-btn" style="margin:18px 0;">Démarrer le quiz</button>
+    <button onclick="window.startQuiz()" class="main-btn">Démarrer le quiz</button>
+    <button onclick="renderApprentissage()" class="btn">Retour</button>
   `;
   window.selectedQuizTables = Array(12).fill(true);
 }
@@ -360,25 +437,32 @@ function nextQuiz(){
   if(window.quizIndex>=window.quizData.length) return finishQuiz();
   let [a,b]=window.quizData[window.quizIndex];
   let apprZone = document.getElementById('apprZone');
-  apprZone.innerHTML=`<div style="text-align:center;">
+  apprZone.innerHTML=`<div style="text-align:center;margin:0 auto;">
     <div class="progress-bar"><div class="bar-inner" id="qtimer"></div></div>
-    <div style="margin:10px 0; font-size:1.58rem;font-weight:bold;">${a} × ${b}</div>
+    <div style="margin:15px 0 7px 0; font-size:1.66rem;font-weight:bold;">${a} × ${b}</div>
     <input class="quiz-input" id="quizAnswer" autocomplete="off" type="number" />
-    <div><button class="save-btn" onclick="submitQuizAnswer()">Valider</button></div>
+    <div>
+      <button class="main-btn" onclick="window.submitQuizAnswer()">Valider</button>
+      <button class="btn" onclick="renderApprentissage()">Retour</button>
+    </div>
   </div>`;
-  animateBar(10,500,()=>submitQuizAnswer(true));
-  setTimeout(()=>{document.getElementById('quizAnswer').focus();},200);
+  animateBar(10,30,()=>window.submitQuizAnswer(true)); // barre ultra fluide
+  setTimeout(()=>{document.getElementById('quizAnswer').focus();},100);
 }
 function animateBar(sec,interval,callback){
   const bar=document.getElementById('qtimer');
-  let progress=100,step=100/(sec*1000/interval);
-  let timer = setInterval(()=>{
-    progress-=step; bar.style.width=Math.max(progress,0)+'%';
-    if(progress<=0){clearInterval(timer);callback();}
-  },interval);window.qBarTimer=timer;
+  let elapsed=0, total=sec*1000, step = interval;
+  function update(){
+    elapsed+=step;
+    let w = Math.max(100*(1-elapsed/total),0);
+    bar.style.width = w + '%';
+    if(elapsed<total) window.qBarTimer = setTimeout(update,step);
+    else callback();
+  }
+  update();
 }
 window.submitQuizAnswer = function(timeout){
-  clearInterval(window.qBarTimer);
+  clearTimeout(window.qBarTimer);
   const val = +document.getElementById("quizAnswer").value;
   let [a,b] = window.quizData[window.quizIndex];
   window.quizResults.push({q: [a,b], a: val, ok: val===a*b, timeout});
@@ -392,11 +476,11 @@ function finishQuiz(){
   saveQuizToDB(results);
   document.getElementById('apprZone').innerHTML = `
     <div style="text-align:center;margin-top:29px;">
-      <div style="font-size:1.23rem;margin-bottom:14px;color:var(--accent);">
+      <div style="font-size:1.32rem;margin-bottom:16px;color:var(--accent);font-weight:700;">
         Résultat : <b>${ok} / ${total}</b>
       </div>
-      <div style="font-size:.99rem;">Questions hors temps : <b>${timeouts}</b></div>
-      <button class="save-btn" onclick="renderApprentissage()" style="margin-top:20px;">Retour</button>
+      <div style="font-size:1.06rem;">Questions hors temps : <b>${timeouts}</b></div>
+      <button class="main-btn" onclick="renderApprentissage()">Retour</button>
     </div>
   `;
 }
@@ -410,22 +494,22 @@ function saveQuizToDB(results){
   });
 }
 
-// ----------- QUIZ À TROUS -----------
-function renderBlanksQuiz(){
+// --------- MODE TROUS -----------
+window.renderBlanksQuiz = function(){
   let qs=[], answers=[], pos=0;
-  for(let t=1;t<=12;t++)for(let i=1;i<=12;i++)qs.push({t,i, blank:Math.random()<.38 });
+  for(let t=1;t<=12;t++)for(let i=1;i<=12;i++)qs.push({t,i, blank:Math.random()<.37 });
+  qs = qs.sort(()=>Math.random()-.5);
   document.getElementById('apprZone').innerHTML = `
     <form id="blankQuizForm">
     <div><b>Complète les cases manquantes :</b></div>
     <div class="blanks-grid" id="blanksGrid">
     ${qs.map((q,j)=>q.blank?
-      `<span class="blank-box">${q.t} × ${q.i} = 
-        <input type="number" class="blank-answer" id="bq${j}" data-resp="${q.t*q.i}" required autocomplete="off">
-      </span>`
+      `<span class="blank-box">${q.t} × ${q.i} = <input type="number" class="blank-answer" id="bq${j}" data-resp="${q.t*q.i}" required autocomplete="off"></span>`
       : `<span class="blank-box">${q.t} × ${q.i} = <b>${q.t*q.i}</b></span>`
     ).join("")}
     </div>
-    <button class="save-btn" type="submit" style="margin:14px auto;display:block;">Vérifier</button>
+    <button class="main-btn" type="submit" style="margin:18px auto 0 auto;display:block;">Vérifier</button>
+    <button class="btn" type="button" onclick="renderApprentissage()" style="margin-block:12px 0;">Retour</button>
     </form>
   `;
   document.getElementById("blankQuizForm").onsubmit=(e)=>{
@@ -442,44 +526,89 @@ function renderBlanksQuiz(){
     corr.className="correction-row";
     corr.innerHTML = `${good} / ${total} bonnes réponses.`;
     document.getElementById("blanksGrid").appendChild(corr);
-    setTimeout(()=>renderApprentissage(),2200);
+    setTimeout(()=>renderApprentissage(),2000);
   }
 }
 
-// ----------- MODE CARTES -----------
-function renderCardMode(){
+// --------- MODE CARTE ---------
+window.renderCardMode = function(){
   let arr = [];
   for(let i=1;i<=12;i++) for(let j=1;j<=12;j++) arr.push([i,j]);
   arr.sort(()=>Math.random()-.5);
-  window.cardStack=arr;window.cardIndex=0;window.cardFlipped=false;
+  window.cardStack = arr;
+  window.cardIndex = 0;
+  window.cardFlipped = false;
   showCard();
 }
-function showCard(){
+window.showCard = function(){
   let [a,b] = window.cardStack[window.cardIndex];
-  let flip = window.cardFlipped ? 'flip-animate':'';
   document.getElementById('apprZone').innerHTML=`
     <div class="card-zone">
-      <div class="card-flip ${flip}" onclick="flipCard()">
-        ${window.cardFlipped ? `<span>${a*b}</span>` : `<span>${a} × ${b}</span>`}
+      <div class="card3D${window.cardFlipped ? ' flipped':''}" onclick="window.flipCard()">
+        <div class="card-flip-side card-flip-front" style="z-index:${window.cardFlipped?1:2};display:${window.cardFlipped?'none':'flex'}">${a} × ${b}</div>
+        <div class="card-flip-side card-flip-back" style="z-index:${window.cardFlipped?2:1};display:${window.cardFlipped?'flex':'none'}">${a*b}</div>
       </div>
       <div class="card-arrows">
-        <button onclick="prevCard(event)" ${window.cardIndex===0?'disabled':''}>&lt;</button>
-        <button onclick="nextCard(event)" ${window.cardIndex===window.cardStack.length-1?'disabled':''}>&gt;</button>
+        <button onclick="window.prevCard(event)" ${window.cardIndex===0?'disabled':''}>&lt;</button>
+        <button onclick="window.nextCard(event)" ${window.cardIndex===window.cardStack.length-1?'disabled':''}>&gt;</button>
       </div>
-      <div style="margin-top:7px;font-size:.97rem;">${window.cardIndex+1} / 144</div>
+      <div style="margin-top:8px;font-size:.99rem;">${window.cardIndex+1} / 144</div>
+      <button class="btn" style="margin-top:16px;" onclick="renderApprentissage()">Retour</button>
     </div>
   `;
 }
-window.flipCard = ()=>{window.cardFlipped=!window.cardFlipped;showCard();};
-window.nextCard = e=>{e.stopPropagation();if(window.cardIndex<window.cardStack.length-1){window.cardIndex++;window.cardFlipped=false;showCard();}};
-window.prevCard = e=>{e.stopPropagation();if(window.cardIndex>0){window.cardIndex--;window.cardFlipped=false;showCard();}};
+window.flipCard = function () {window.cardFlipped = !window.cardFlipped;window.showCard();}
+window.nextCard = function(e){e.stopPropagation();if(window.cardIndex<window.cardStack.length-1){window.cardIndex++;window.cardFlipped=false;window.showCard();}}
+window.prevCard = function(e){e.stopPropagation();if(window.cardIndex>0){window.cardIndex--;window.cardFlipped=false;window.showCard();}}
 
-// ----------- SUIVI -----------
+// --------- MODE DÉFI RAPIDE --------
+window.renderDefiRapide=function(){
+  let arr=[];for(let n=0;n<10;n++){let x=1+Math.floor(Math.random()*12),y=1+Math.floor(Math.random()*12);arr.push([x,y]);}
+  window.deFiData = arr; window.deFiIndex=0; window.deFiResults=[];
+  nextDeFiQ();
+}
+function nextDeFiQ(){
+  if(window.deFiIndex>=window.deFiData.length)return finishDeFi();
+  let [a,b]=window.deFiData[window.deFiIndex];
+  document.getElementById('apprZone').innerHTML=`<div style="text-align:center;">
+    <div class="progress-bar"><div class="bar-inner" id="defiBar"></div></div>
+    <div style="margin:15px 0 7px 0; font-size:1.48rem;font-weight:bold;">${a} × ${b}</div>
+    <input class="quiz-input" id="defiInput" autocomplete="off" type="number" />
+    <div>
+      <button class="main-btn" onclick="window.submitDeFi()">Valider</button>
+      <button class="btn" onclick="renderApprentissage()">Retour</button>
+    </div>
+  </div>`;
+  animateBar(15,25,()=>window.submitDeFi(true));
+  setTimeout(()=>{document.getElementById('defiInput').focus();},100);
+}
+window.submitDeFi=function(timeout){
+  clearTimeout(window.qBarTimer);
+  const val = +document.getElementById("defiInput").value;
+  let [a,b]=window.deFiData[window.deFiIndex];
+  window.deFiResults.push({q:[a,b],a:val,ok:val===a*b,timeout});
+  window.deFiIndex++;nextDeFiQ();
+}
+function finishDeFi(){
+  let results=window.deFiResults;
+  let ok=results.filter(x=>x.ok&&!x.timeout).length,total=results.length;
+  document.getElementById('apprZone').innerHTML = `
+    <div style="text-align:center;margin-top:29px;">
+      <div style="font-size:1.27rem;margin-bottom:15px;color:var(--accent);font-weight:700;">
+        Score du défi : <b>${ok} / ${total}</b>
+      </div>
+      <div style="font-size:1.06rem;">${results.map(r=>r.ok?'✅':'❌').join(' ')}</div>
+      <button class="main-btn" onclick="renderApprentissage()">Retour</button>
+    </div>
+  `;
+}
+
+// ---------- SUIVI -----------
 function renderSuivi(){
   const uid = auth.currentUser.uid, refQ=ref(db,'quizz/'+uid+'/');
   get(refQ).then(snapshot=>{
     let quizz = snapshot.exists()?snapshot.val():[]; quizz = Array.isArray(quizz)?quizz:[];
-    let html = `<h1 style="font-size:1.19rem;color:var(--accent);margin:0 0 15px 0;">Suivi</h1>
+    let html = `<h1 style="font-size:1.15rem;color:var(--accent);margin:0 0 16px 0;font-weight:800;">Suivi</h1>
     <div style="overflow-x:auto;"><table class="suivi-table">
     <tr><th>Date</th><th>Score</th><th>Temps Out</th><th>Sans faute</th></tr>
     `+quizz.map(q=>{
@@ -520,18 +649,18 @@ function renderSuivi(){
   });
 }
 
-// ----------- PARAMETRES -----------
+// ---------- PARAMETRES -----------
 function renderParametres(){
   const uid = auth.currentUser.uid, settingsRef=ref(db,'settings/'+uid+'/');
   get(settingsRef).then(snap=>{
     let sett = snap.exists()?snap.val():{userName:""};
     content.innerHTML = `
-    <h1 style="font-size:1.2rem;color:var(--accent);">Paramètres</h1>
+    <h1 style="font-size:1.14rem;color:var(--accent);font-weight:800;">Paramètres</h1>
     <form id="paramForm" class="param-form">
       <input type="text" id="setUserName" placeholder="Nom d'utilisateur" value="${sett.userName||""}" required>
       <div class="param-btns">
         <button class="save-btn" type="submit">Enregistrer</button>
-        <button class="reset-btn" type="button" onclick="showResetConfirm()">Réinitialiser progression</button>
+        <button class="reset-btn" type="button" onclick="window.showResetConfirm()">Réinitialiser progression</button>
       </div>
     </form>
     `;
@@ -553,7 +682,7 @@ window.showResetConfirm = ()=>{
 function showConfirm(msg, yes){
   const confirmLayer=document.getElementById("confirmLayer");
   confirmLayer.innerHTML = `<div class="confirm-box">${msg}<br>
-    <button class="save-btn" id="yesBtn">Oui</button>
+    <button class="main-btn" id="yesBtn">Oui</button>
     <button class="reset-btn" id="noBtn">Non</button>
   </div>`;
   confirmLayer.classList.remove("hidden");
