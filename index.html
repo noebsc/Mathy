@@ -4,24 +4,24 @@
   <meta charset="UTF-8">
   <title>Mathy by Noé</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Fonts -->
+  <!-- Police principale "carrée et imposante" pour Mathy, + police confort lecture -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --beige: #e9dec2;
       --brique: #cf9773;
       --glass-dark: rgba(207, 151, 115, 0.17);
-      --glass-light: rgba(233, 222, 194, 0.6);
-      --glass: rgba(230, 202, 171, 0.4);
+      --glass-light: rgba(233, 222, 194, 0.62);
+      --glass: rgba(230, 202, 171, 0.44);
       --accent: #db6a3c;
-      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
       --radius: 24px;
-      --transition: all 0.7s cubic-bezier(.77,0,.18,1);
+      --transition: all 0.9s cubic-bezier(.77,0,.18,1);
       --font-main: 'Montserrat', sans-serif;
       --font-title: 'Orbitron', sans-serif;
     }
     body {
-      background: linear-gradient(135deg, var(--beige) 70%, var(--brique));
+      background: linear-gradient(125deg, var(--beige) 60%, var(--brique) 105%);
       min-height: 100vh;
       margin: 0;
       font-family: var(--font-main);
@@ -31,8 +31,8 @@
       background: var(--glass-dark);
       box-shadow: var(--shadow);
       border-radius: var(--radius);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border: 1.5px solid var(--glass-light);
       transition: var(--transition);
     }
@@ -40,7 +40,8 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      padding: 16px 32px;
+      padding: 14px 4vw 14px 2vw;
+      transition: var(--transition);
     }
     .burger {
       width: 48px;
@@ -55,84 +56,71 @@
       z-index: 20;
       transition: var(--transition);
       border: 1px solid var(--beige);
-      box-shadow: var(--shadow);
+      box-shadow: 0 4px 16px #cf977320;
     }
     .burger span, .burger span:before, .burger span:after {
       content: '';
       display: block;
       background: var(--accent);
       height: 4px;
-      width: 30px;
+      width: 28px;
       border-radius: 2px;
       transition: var(--transition);
       position: relative;
     }
     .burger span { position: relative; }
-    .burger span:before {
-      position: absolute;
-      top: -10px;
-    }
-    .burger span:after {
-      position: absolute;
-      top: 10px;
-    }
-    /* Burger active animation */
+    .burger span:before { position: absolute; top:-10px; }
+    .burger span:after { position: absolute; top:10px; }
     .burger.open span { background: transparent; }
     .burger.open span:before {
-      top: 0;
-      transform: rotate(45deg);
+      top:0; transform: rotate(45deg);
     }
     .burger.open span:after {
-      top: 0;
-      transform: rotate(-45deg);
+      top:0; transform: rotate(-45deg);
     }
     .title-mathy {
       font-family: var(--font-title);
-      font-size: 2.7rem;
+      font-size: 2.8rem;
       color: var(--accent);
-      letter-spacing: 1px;
-      user-select: none;
+      letter-spacing: .5px;
       font-weight: 800;
-      margin-right: 12px;
+      margin-right: 10px;
+      user-select: none;
       text-shadow: 2px 3px 14px #cf977341;
-      /* glass underline effect */
       background: linear-gradient(180deg, var(--accent) 50%, var(--beige) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .by-noe {
       font-family: var(--font-main);
-      font-size: 1.15rem;
+      font-size: 1.09rem;
       color: #9d6d4e;
       font-weight: 600;
       opacity: 0.7;
-      margin-top: 18px;
-      margin-left: 4px;
+      margin-top: 20px;
+      margin-left: 8px;
     }
-    /* Sidebar menu */
     .sidebar {
       position: fixed;
       top: 0;
-      left: -240px;
+      left: -272px;
       height: 100vh;
-      width: 240px;
+      width: 250px;
       background: var(--glass);
-      box-shadow: 6px 0 32px 0 rgba(31, 38, 135, 0.15);
+      box-shadow: 7px 0 22px 0 rgba(31, 38, 135, 0.16);
       z-index: 10;
-      transition: left 0.6s cubic-bezier(.77,0,.18,1);
-      padding-top: 90px;
+      transition: left 0.7s cubic-bezier(.74,0,.16,1);
+      padding-top: 98px;
       display: flex;
       flex-direction: column;
       gap: 25px;
-      backdrop-filter: blur(30px);
+      backdrop-filter: blur(26px);
     }
-    .sidebar.open {
-      left: 0;
-    }
+    .sidebar.open { left: 0; }
     .sidebar button {
       background: transparent;
       border: none;
-      font: 700 1.25rem var(--font-main);
+      font: 700 1.13rem var(--font-main);
       color: var(--brique);
       text-align: left;
       padding: 14px 30px;
@@ -145,27 +133,25 @@
       color: #fff;
       font-weight: bold;
       letter-spacing: .5px;
-      box-shadow: 0 2px 6px #b5795933;
-      transform: translateX(10px) scale(1.07);
+      box-shadow: 0 2px 6px #b579593b;
+      transform: translateX(12px) scale(1.08);
     }
     .content {
-      margin: 24px 30px 40px 270px;
-      transition: var(--transition);
+      margin: 24px 30px 40px 285px;
+      min-height: 60vh;
+      transition: margin .9s cubic-bezier(.77,0,.18,1);
     }
-    @media (max-width: 700px) {
-      .content { margin-left: 0; }
-      .sidebar { width: 93vw; }
-    }
-    /* Animations */
+    @media (max-width: 860px) { .content{margin-left:13vw;} .sidebar{width:93vw;} }
+    @media (max-width: 660px) { .content{margin-left:0;} .sidebar {left:-93vw;} }
     .fade-in {
-      animation: fadeIn 1.2s cubic-bezier(.44,.69,.19,.97);
+      animation: fadeIn 1.24s cubic-bezier(.44,.69,.19,.94) both;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(24px);}
+      from { opacity: 0; transform: translateY(32px);}
       to { opacity: 1; transform: translateY(0);}
     }
     .popup {
-      animation: popup .7s cubic-bezier(.88,-0.21,.03,1.2);
+      animation: popup .8s cubic-bezier(.92,-0.1,.02,1.12) both;
     }
     @keyframes popup {
       0% {transform: scale(.7);}
@@ -176,11 +162,11 @@
       background: var(--brique);
       color: var(--beige);
       border: none;
-      padding: 14px 40px;
-      font-size: 1.1rem;
+      padding: 15px 45px;
+      font-size: 1.12rem;
       border-radius: 12px;
       box-shadow: var(--shadow);
-      margin: 22px 0;
+      margin: 24px 0 5px 0;
       cursor: pointer;
       font-weight: bold;
       letter-spacing: .7px;
@@ -197,18 +183,22 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: rgba(210, 167, 135, 0.35);
-      animation: fadeIn .7s;
+      background: rgba(210, 167, 135, 0.38);
+      animation: fadeIn .75s;
       cursor: pointer;
+      transition: var(--transition);
     }
-    /* Progress bar for quiz */
+    .fullscreen-table .glass {
+      border-radius: 42px;
+    }
     .progress-bar {
       width: 100%;
-      height: 10px;
+      height: 13px;
       border-radius: 8px;
       background: #ecd4ae;
       overflow: hidden;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
     }
     .progress {
       height: 100%;
@@ -217,14 +207,13 @@
       width: 100%;
       transition: width 0.8s cubic-bezier(.65,0,.55,1);
     }
-    /* Card styles */
     .card-mode {
       min-width: 320px;
       max-width: 420px;
       height: 200px;
       margin: 0 auto;
-      margin-top: 55px;
-      perspective: 1500px;
+      margin-top: 45px;
+      perspective: 1550px;
       position: relative;
     }
     .flip-card {
@@ -237,7 +226,7 @@
     .card-front, .card-back {
       width: 100%;
       height: 100%;
-      border-radius: 16px;
+      border-radius: 18px;
       background: var(--glass);
       box-shadow: var(--shadow);
       position: absolute;
@@ -245,7 +234,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 2.1rem;
+      font-size: 2.15rem;
       font-weight: bold;
       color:var(--accent);
       backface-visibility: hidden;
@@ -262,11 +251,11 @@
       display: flex;
       position: absolute;
       top: 50%;
-      left: -45px;
-      right: -45px;
+      left: -46px;
+      right: -46px;
       justify-content: space-between;
       align-items: center;
-      width: calc(100% + 90px);
+      width: calc(100% + 92px);
       pointer-events: none;
     }
     .card-arrows button {
@@ -274,31 +263,31 @@
       color: #fff;
       border: none;
       border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      font-size: 1.6rem;
+      width: 46px;
+      height: 46px;
+      font-size: 1.65rem;
       pointer-events: auto;
       cursor: pointer;
       box-shadow: 0 4px 12px #b5795948;
       transition: var(--transition);
+      margin:0 5px;
     }
-    /* Glass morph forms */
-    .glass-form input {
-      width: 260px;
+    .glass-form input, .glass-form select {
+      width: 97%;
       padding: 13px;
-      margin: 14px 0;
+      margin: 12px 0 21px 0;
       border: none;
-      border-radius: 9px;
-      box-shadow: var(--shadow);
+      border-radius: 10px;
+      box-shadow: 0 2px 18px #cf977318;
       background: var(--glass-light);
       color: var(--brique);
       font-size:1.08rem;
       outline: none;
-      transition: box-shadow .6s, background .7s;
+      transition: box-shadow .7s, background .84s;
     }
     .glass-form input:focus {
-      background:var(--glass);
-      box-shadow: 0 6px 30px #cf977374;
+      background: var(--glass);
+      box-shadow: 0 10px 28px #cf977374;
     }
     .confirm-box {
       position: fixed; z-index: 100; top:0;left:0;right:0;bottom:0; display: flex;align-items:center;justify-content: center;
@@ -309,19 +298,29 @@
       border-radius: 16px;
       padding: 42px 46px;
       box-shadow: var(--shadow);
-      font-size: 1.2rem;
+      font-size: 1.19rem;
       color: var(--brique);
       text-align: center;
-      animation:popup .5s;
+      animation:popup .6s both;
     }
     .confirm-buttons {
       display: flex; justify-content:center; gap:22px; margin-top:20px;
     }
+    .param-saved {
+      font-size:1rem;
+      color: #196f13;
+      text-align: right;
+      margin: -10px 0 15px 0;
+      display:none;
+    }
     /* Scrollbar */
-    ::-webkit-scrollbar { width: 9px; background:var(--beige);}
+    ::-webkit-scrollbar { width: 8px; background:var(--beige);}
     ::-webkit-scrollbar-thumb { background:var(--glass-dark); border-radius:3px;}
     /* Responsive */
-    @media (max-width: 600px) { .card-mode { max-width:98vw; min-width:0; } .sidebar { left: -93vw; width:93vw;} .content {margin: 24px 6vw 40px 8vw;} }
+    @media (max-width: 610px) { .card-mode { max-width:98vw; min-width:0; } .sidebar { left: -98vw; width:98vw;} .content {margin: 24px 1vw 40px 5vw;} }
+    /* Checkbox custom */
+    input[type="checkbox"].quiz-table { width: 18px; height:18px; accent-color: var(--accent);}
+    label[style*="quiz-table"] { user-select: none; cursor:pointer; }
   </style>
 </head>
 <body>
@@ -334,11 +333,9 @@
     <button data-page="apprentissage">Apprentissage</button>
     <button data-page="suivi">Suivi</button>
     <button data-page="parametres">Paramètres</button>
-    <button id="logoutBtn" style="margin-top:auto;color:#b04f15;">Déconnexion</button>
+    <button id="logoutBtn" style="margin-top:auto;color:#b04f15;font-size:1.1rem;">Déconnexion</button>
   </nav>
   <main class="content fade-in" id="content"></main>
-
-  <!-- Confirmation Popup -->
   <div id="confirmBox" style="display:none;">
     <div class="confirm-box">
       <div class="confirm-message">
@@ -350,8 +347,6 @@
       </div>
     </div>
   </div>
-  
-  <!-- AUTH Modal -->
   <div id="authModal" style="position:fixed;z-index:1000;top:0;left:0;right:0;bottom:0; background:rgba(240,211,192,.93);display:flex;align-items:center;justify-content:center;">
     <form id="authForm" class="glass glass-form" style="min-width:340px;display:flex;flex-direction:column;align-items:center;padding:42px 38px;">
       <h2 style="font-family:var(--font-title);font-size:2rem;color:var(--accent);">Connexion à Mathy</h2>
@@ -364,12 +359,10 @@
       <div style="color:#bf3838;font-size:1rem;" id="authError"></div>
     </form>
   </div>
-
-  <!-- Firebase SDKs (auth + firestore if ok) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
     import { getDatabase, ref, set, get, update, onValue } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
 
     const firebaseConfig = {
@@ -377,7 +370,7 @@
       authDomain: "mathy-f7fc0.firebaseapp.com",
       databaseURL: "https://mathy-f7fc0-default-rtdb.europe-west1.firebasedatabase.app",
       projectId: "mathy-f7fc0",
-      storageBucket: "mathy-f7fc0.firebasestorage.app",
+      storageBucket: "mathy-f7fc0-firebaseapp.com",
       messagingSenderId: "612107190361",
       appId: "1:612107190361:web:4b8c56d142372fc100f148",
       measurementId: "G-RQYNBK3BDE"
@@ -387,21 +380,17 @@
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    // --- BURGER/SIDEBAR ---
+    // BURGER + SIDEBAR ANIM
     const burger = document.getElementById("burger");
     const sidebar = document.getElementById("sidebar");
-    burger.onclick = () => {
-      burger.classList.toggle('open');
-      sidebar.classList.toggle('open');
-    };
-    // Rétracter sidebar si clic à l'extérieur
+    burger.onclick = () => { burger.classList.toggle('open'); sidebar.classList.toggle('open'); };
     document.body.addEventListener("mousedown", e=>{
       if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && !burger.contains(e.target)) {
         burger.classList.remove('open'); sidebar.classList.remove('open');
       }
     });
 
-    // --- NAVIGATION ---
+    // NAVIGATION
     const content = document.getElementById("content");
     sidebar.querySelectorAll("button[data-page]").forEach(btn => {
       btn.onclick = () => switchPage(btn.dataset.page, btn);
@@ -413,17 +402,16 @@
       currentPage = page;
       document.querySelector('.content').classList.remove("fade-in");
       setTimeout(()=>{ renderPage(page); document.querySelector('.content').classList.add("fade-in"); }, 260);
-      if(window.innerWidth<700){ burger.classList.remove('open'); sidebar.classList.remove('open'); }
+      if(window.innerWidth<660){ burger.classList.remove('open'); sidebar.classList.remove('open'); }
     }
 
-    // --- AUTHENTIFICATION ---
+    // AUTHENTIFICATION
     const authModal = document.getElementById("authModal");
     const authForm = document.getElementById("authForm");
     const emailInput = document.getElementById("email");
     const pwInput = document.getElementById("password");
     const authError = document.getElementById("authError");
     const registerLink = document.getElementById("registerLink");
-
     let isRegisterMode = false;
     registerLink.onclick = ()=>{
       isRegisterMode = !isRegisterMode;
@@ -435,7 +423,8 @@
       authError.innerText = "";
       if(isRegisterMode){
         try{
-          await createUserWithEmailAndPassword(auth, emailInput.value, pwInput.value);
+          const userCred = await createUserWithEmailAndPassword(auth, emailInput.value, pwInput.value);
+          await set(ref(db,'settings/'+userCred.user.uid), { userName:emailInput.value.split("@")[0], theme:"beige-brique" });
         } catch(err){ authError.innerText = err.message; }
       } else {
         try{
@@ -443,7 +432,6 @@
         } catch(err){ authError.innerText = err.message; }
       }
     }
-    // Gestion state utilisateur
     onAuthStateChanged(auth, user=>{
       if (user) {
         authModal.style.display = "none";
@@ -453,13 +441,9 @@
         content.innerHTML = "";
       }
     });
-    // Déconnexion
-    document.getElementById("logoutBtn").onclick = ()=>{
-      signOut(auth);
-    }
+    document.getElementById("logoutBtn").onclick = ()=>{ signOut(auth); }
 
-    // ---- CORE PAGES ----
-    // -------------------- T A B L E S (de base) --------------------
+    // RENDER PAGE PRINCIPALE
     function renderPage(page){
       if (page==="tables"){ renderTablesMultiplication(); }
       else if (page==="apprentissage"){ renderApprentissage(); }
@@ -467,21 +451,18 @@
       else if (page==="parametres"){ renderParametres(); }
     }
 
-    // TABLES PAGE
+    // TABLES DE MULTIPLICATION
     function renderTablesMultiplication(){
-      let html = `<h1 style="color:var(--accent);font-size:2.09rem;">Tables de multiplication</h1>
-      <div id="tables-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:34px; margin-top:34px;">`;
-      // 1 à 12
+      let html = `<h1 style="color:var(--accent);font-size:2.07rem;">Tables de multiplication</h1><div id="tables-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:34px; margin-top:37px;">`;
       for(let i=1;i<=12;i++){
-        html += `<div class="glass fade-in" style="padding:32px 0 24px 0; text-align:center; cursor:pointer; font-size:1.6rem; transition:transform .8s cubic-bezier(.77,.2,.12,1);"
+        html += `<div class="glass fade-in" style="padding:32px 0 24px 0; text-align:center; cursor:pointer; font-size:1.6rem; transition:transform .85s cubic-bezier(.74,.2,.12,1);"
         onclick="showTableFull(${i})" id="tableCard${i}">
-        <div style="font-size:2.1rem;font-family:var(--font-title);color:var(--brique);">Table de ${i}</div></div>`;
+        <div style="font-size:2.08rem;font-family:var(--font-title);color:var(--brique);">Table de ${i}</div></div>`;
       }
       html += '</div>';
       content.innerHTML = html;
     }
-    window.showTableFull = showTableFull; // Pour onclick
-
+    window.showTableFull = showTableFull;
     let tableFullMode = false;
     function showTableFull(n){
       if(tableFullMode) return;
@@ -489,26 +470,26 @@
       const overlay = document.createElement('div');
       overlay.className = "fullscreen-table";
       overlay.onclick = (e)=> {
-        if(e.target===overlay){ overlay.classList.add('fade-out'); setTimeout(()=>{overlay.remove(); tableFullMode=false;},370);}
+        if(e.target===overlay){ overlay.classList.add('fade-out'); setTimeout(()=>{overlay.remove(); tableFullMode=false;},390);}
       };
       let html = `<div class="glass popup" style="min-width:360px;max-width:95vw;padding:60px 70px;text-align:center;">
       <h2 style="font-family:var(--font-title);font-size:2rem;color:var(--accent);">Table de ${n}</h2>
-      <div style="font-size:1.65rem;color:var(--brique);padding:21px 0">`;
+      <div style="font-size:1.68rem;color:var(--brique);padding:24px 0">`;
       for(let i=1;i<=12;i++){ html += `${n} × ${i} = <b>${n*i}</b><br>`; }
       html += '</div></div>';
       overlay.innerHTML = html;
       document.body.appendChild(overlay);
     }
 
-    // -------------------- A P P R E N T I S S A G E --------------------
+    // APPRENTISSAGE
     function renderApprentissage(){
       content.innerHTML = `
         <h1 style="color:var(--accent);font-size:2rem;">Apprentissage</h1>
-        <div style="display:flex;gap:38px;flex-wrap:wrap;margin-top:20px;">
-          <div class="glass fade-in" style="padding:34px;min-width:290px;flex:1;">
+        <div style="display:flex;gap:38px;flex-wrap:wrap;margin-top:16px;">
+          <div class="glass fade-in" style="padding:34px;min-width:290px;flex:1 1 285px;">
             <div style="font-size:1.18rem;font-weight:bold;color:var(--accent);margin-bottom:16px;">Démarrer un quiz</div>
-            <div style="font-size:1rem; color:var(--brique);">Sélectionne les tables, puis lance le quiz !</div>
-            <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:17px 0 13px 0;" id="quiz-tables">` +
+            <div style="font-size:1rem; color:var(--brique);">Sélectionne les tables, puis lance le quiz !</div>
+            <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:16px 0 13px 0;" id="quiz-tables">` +
             Array.from({length:12},(_,i)=>`<label style="color:var(--brique);font-size:1.02rem;">
               <input type="checkbox" class="quiz-table" value="${i+1}" checked /> ${i+1}
             </label>`).join("")
@@ -517,12 +498,12 @@
           </div>
           <div class="glass fade-in" style="padding:34px;min-width:290px;flex:1;">
             <div style="font-size:1.17rem;font-weight:bold;color:var(--accent);margin-bottom:18px;">Questionnaire avec blancs</div>
-            <div style="font-size:1rem; color:var(--brique);margin-bottom:18px;">Complète tous les trous !</div>
+            <div style="font-size:1rem; color:var(--brique);margin-bottom:18px;">Complète toutes les tables, certains résultats sont cachés par des trous à remplir!</div>
             <button class="glass-btn" onclick="startWhiteQuiz()">Faire le questionnaire</button>
           </div>
           <div class="glass fade-in" style="padding:34px;min-width:290px;flex:1;">
             <div style="font-size:1.18rem;font-weight:bold;color:var(--accent);margin-bottom:18px;">Mode Cartes</div>
-            <div style="font-size:1rem;color:var(--brique);margin-bottom:18px;">Fais défiler et découvre les réponses !</div>
+            <div style="font-size:1rem;color:var(--brique);margin-bottom:18px;">Découvre une multiplication aléatoire à la fois, clique pour voir la réponse, avance/reviens !</div>
             <button class="glass-btn" onclick="startCardMode()">Lancer le mode cartes</button>
           </div>
         </div>
@@ -532,13 +513,14 @@
     window.startWhiteQuiz = startWhiteQuiz;
     window.startCardMode = startCardMode;
 
-    // ----------- Quiz mode ----------
+    // === QUIZ ===
     let quizData = [], quizIndex = 0, timer = null, quizResults = [];
     function startQuiz(){
       let selected = Array.from(document.querySelectorAll(".quiz-table:checked")).map(e=>+e.value);
+      if(selected.length===0) { alert("Sélectionne au moins une table !"); return; }
       quizData = [];
       selected.forEach(t => { for(let i=1;i<=12;i++) quizData.push([t,i]); });
-      quizData = quizData.sort(()=>Math.random()-.5); // shuffle
+      quizData = quizData.sort(()=>Math.random()-.5);
       quizIndex = 0; quizResults = [];
       showQuizQuestion();
     }
@@ -548,12 +530,12 @@
       content.innerHTML = `
         <div style="text-align:center;padding-top:44px;">
           <div class="progress-bar"><div class="progress" id="quizProgress"></div></div>
-          <div class="glass popup" style="font-size:2.2rem; font-family:var(--font-title); color:var(--accent); margin-bottom:30px; padding:30px;">${a} × ${b}</div>
-          <input type="number" style="font-size:2rem;padding:15px;width:150px;margin:8px;" id="quizAnswer" autocomplete="off" />
+          <div class="glass popup" style="font-size:2.15rem; font-family:var(--font-title); color:var(--accent); margin-bottom:30px; padding:30px;">${a} × ${b}</div>
+          <input type="number" style="font-size:2.1rem;padding:15px;width:150px;margin:9px;" id="quizAnswer" autocomplete="off" />
           <div><button class="glass-btn" onclick="submitQuizAnswer()">Valider</button></div>
         </div>`;
       animateQuizBar();
-      setTimeout(()=>{document.getElementById("quizAnswer").focus();},200);
+      setTimeout(()=>{document.getElementById("quizAnswer").focus();},250);
     }
     function animateQuizBar(){
       const bar = document.getElementById("quizProgress");
@@ -561,33 +543,30 @@
       bar.style.width = "100%";
       if(timer) clearInterval(timer);
       timer = setInterval(()=>{
-        time-=0.1;
+        time-=0.10;
         bar.style.width = ((time/10)*100)+"%";
         if(time<=0){ clearInterval(timer); submitQuizAnswer(true);}
-      },70);
+      },65);
     }
     window.submitQuizAnswer = submitQuizAnswer;
     function submitQuizAnswer(timeout=false){
       clearInterval(timer);
       const val = +document.getElementById("quizAnswer").value;
       quizResults.push({q:quizData[quizIndex], a:val, ok: val===(quizData[quizIndex][0]*quizData[quizIndex][1]), timeout});
-      quizIndex++;
-      showQuizQuestion();
+      quizIndex++; showQuizQuestion();
     }
     function finishQuiz(){
-      // Sauvegarde et affichage score rapide
       let ok=quizResults.filter(x=>x.ok&&!x.timeout).length, total=quizResults.length;
       saveQuizToDB(quizResults);
       content.innerHTML = `
-        <div class="glass popup" style="text-align:center;font-size:1.4rem;padding:34px;max-width:520px;margin:52px auto;">
-          <div style="color:var(--accent);font-size:2rem;font-family:var(--font-title);margin-bottom:18px;">Quiz terminé !</div>
+        <div class="glass popup" style="text-align:center;font-size:1.32rem;padding:35px;max-width:520px;margin:55px auto;">
+          <div style="color:var(--accent);font-size:2rem;font-family:var(--font-title);margin-bottom:17px;">Quiz terminé !</div>
           <div>Score : <b>${ok} / ${total}</b></div>
           <div style="margin:15px 0 8px 0;color:var(--brique);">Temps dépassé : ${quizResults.filter(x=>x.timeout).length}</div>
           <button class="glass-btn" onclick="switchPage('apprentissage')">Retour</button>
         </div>
       `;
     }
-    // --- Sauvegarde quiz en DB
     function saveQuizToDB(results){
       const uid = auth.currentUser.uid;
       const quiz = { results, date: Date.now() };
@@ -598,19 +577,18 @@
       });
     }
 
-    // ------------- Questionnaire avec BLANCS -------------
+    // === QUESTIONNAIRE AVEC BLANCS ===
     function startWhiteQuiz(){
-      // Génère questions
       let qs = [];
       for(let t=1; t<=12; t++)
         for(let i=1;i<=12;i++)
-          qs.push({t,i, blank:Math.random()<.36 });
+          qs.push({t,i, blank:Math.random()<.38 });
       content.innerHTML=`
         <h2 style="color:var(--accent);font-family:var(--font-title);">Complète les blancs</h2>
-        <form id="whiteForm" class="glass" style="margin:34px auto;max-width:620px;padding:40px;">
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+        <form id="whiteForm" class="glass" style="margin:34px auto;max-width:660px;padding:38px;">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;">
             ${qs.map((q,j)=>q.blank?
-              `<input type="number" name="white${j}" style="font-size:1.04rem;padding:9px;border-radius:6px;" placeholder="${q.t} × ${q.i}" required="required"/>`
+              `<input type="number" name="white${j}" style="font-size:1.08rem;padding:11px;border-radius:7px;" placeholder="${q.t} × ${q.i}" required="required" data-resp="${q.t*q.i}"/>`
               : `<span style="padding:13px;font-size:1.13rem;color:var(--brique);">${q.t} × ${q.i} = <b>${q.t*q.i}</b></span>`
               ).join("")}
           </div>
@@ -619,18 +597,28 @@
       `;
       document.getElementById("whiteForm").onsubmit=(e)=>{
         e.preventDefault();
-        // (Corrigé et données à pousser en suivi si tu veux)
-        switchPage('apprentissage');
+        let inputs = Array.from(document.querySelectorAll("#whiteForm input[type='number']"));
+        let good=0;
+        for(let inp of inputs){
+          if(+inp.value==+inp.dataset.resp){
+            inp.style.boxShadow = "0 0 11px #199f23b6";
+            inp.style.background = "#e6f6ed";
+            good++;
+          }else{
+            inp.style.boxShadow = "0 0 12px #e93434ba";
+            inp.style.background = "#f19c93";
+          }
+        }
+        setTimeout(()=>{switchPage("apprentissage");}, 1700);
       };
     }
 
-    // ------------ MODE CARTES ---------------
+    // === MODE CARTES ===
     let cardStack = [], cardIndex = 0, cardFlipped = false;
     function startCardMode(){
-      // Build tous multiplications
       cardStack = [];
       for(let i=1;i<=12;i++) for(let j=1;j<=12;j++) cardStack.push([i,j]);
-      cardStack = cardStack.sort(()=>Math.random()-.5); // shuffle
+      cardStack = cardStack.sort(()=>Math.random()-.5);
       cardIndex=0; cardFlipped=false;
       renderCard();
     }
@@ -653,107 +641,130 @@
     window.nextCard = (e)=>{ if(e) e.stopPropagation(); if(cardIndex<cardStack.length-1){cardIndex++;cardFlipped=false;renderCard();}};
     window.prevCard = (e)=>{ if(e) e.stopPropagation(); if(cardIndex>0){cardIndex--;cardFlipped=false;renderCard();}}
 
-    // ------------- SUIVI / HISTO ------------ 
+    // === SUIVI - HISTORIQUE, STATISTIQUES AVANCÉES, ERREURS, POURCENTAGE, FAIBLESSES...
     function renderSuivi(){
-      // Récupère les quizz DB user
       const uid = auth.currentUser.uid, refQ=ref(db,'quizz/'+uid+'/');
       get(refQ).then(snapshot=>{
-        let quizz = snapshot.exists()?snapshot.val():[];
-        quizz = Array.isArray(quizz)?quizz:[]; 
+        let quizz = snapshot.exists()?snapshot.val():[]; quizz = Array.isArray(quizz)?quizz:[];
         let html = `<h1 style="color:var(--accent);font-size:2rem;">Suivi</h1>
         <div class="glass" style="margin:24px 0 34px 0;padding:37px 35px;">
-          <div style="font-size:1.18rem;color:var(--accent);margin-bottom:13px;">Historique de vos quizz</div>
+          <div style="font-size:1.15rem;color:var(--accent);margin-bottom:9px;">Historique des quizz</div>
           <table style="width:100%;border-collapse:collapse;">
-          <tr style="color:var(--accent);font-size:1.03rem;"><th>Date</th><th>Score</th><th>Sans faute</th></tr>
+          <tr style="color:var(--accent);font-size:1.03rem;"><th>Date</th><th>Score</th><th>Temps Out</th><th>Sans faute</th></tr>
           `+quizz.map(q=>{
             let ok=q.results.filter(x=>x.ok&&!x.timeout).length, total=q.results.length;
             return `<tr style="text-align:center;color:var(--brique);">
               <td>${new Date(q.date).toLocaleString('fr-FR')}</td>
               <td><b>${ok} / ${total}</b></td>
+              <td>${q.results.filter(x=>x.timeout).length}</td>
               <td>${ok===total ? "✅" : ""}</td>
             </tr>`;
           }).reverse().join("")+`</table></div>`;
-          // Stats rapides/Exemple stats-perf : à étoffer selon suivi réel
+        // --- Stats détaillées
+        let rawStats = computeStats(quizz);
         html+=`
-        <div class="glass" style="max-width:400px;margin:auto;padding:36px 20px;text-align:center;">
-          <div style="font-size:1.4rem;font-family:var(--font-title);">Progression</div>
-          <div style="font-size:3.2rem;color:var(--accent);margin:16px 0;">${calcPercentConnu(quizz)}%</div>
-          <div style="color:var(--brique);">Pourcentage estimé des tables parfaitement maîtrisées (score parfait répété)</div>
+        <div style="display:flex;gap:32px;flex-wrap:wrap;">
+          <div class="glass" style="flex:1;min-width:260px;max-width:400px;padding:33px 19px;text-align:center;">
+            <div style="font-size:1.33rem;font-family:var(--font-title);">Pourcentage de maîtrise<br>des tables</div>
+            <div style="font-size:3.1rem;color:var(--accent);margin:14px 0 16px 0;">${rawStats.percentConnu}%</div>
+            <div style="color:var(--brique);font-size:.99rem;">${rawStats.details}</div>
+          </div>
+          <div class="glass" style="flex:1;min-width:260px;max-width:400px;padding:33px 21px;text-align:center;">
+            <div style="font-size:1.2rem;color:var(--accent);margin-bottom:13px;">Tes tables les moins connues&nbsp;:</div>
+            <div style="font-size:1.03rem;">
+              ${rawStats.leastTables.length?rawStats.leastTables.map(t=>"Table "+t).join(", ") : "—"}
+            </div>
+            <div style="font-size:1.18rem;margin:18px 0 10px 0;color:var(--accent);">Multiplications les plus ratées</div>
+            <div style="font-size:1rem;">${rawStats.worstMult.length?rawStats.worstMult.join(", ") : "—"}</div>
+            <div style="font-size:1.18rem;margin:18px 0 10px 0;color:var(--accent);">Celle que tu connais le mieux</div>
+            <div style="font-size:1.1rem;">${rawStats.bestMult?rawStats.bestMult:"—"}</div>
+          </div>
         </div>
         `;
         content.innerHTML = html;
       });
     }
-    // Estimation “table maîtrisée”
-    function calcPercentConnu(quizz){
-      // Ex: compte combien de fois par table tous résultats ok sur 5 sessions récentes
-      // Pour prototype : si >=5/5 alors maîtrisée
-      let tableStats = {};
-      if(!quizz||!quizz.length) return 0;
-      quizz = Array.isArray(quizz)?quizz:[]; // safety
+    function computeStats(quizz){
+      if(!quizz||!quizz.length) return {percentConnu:0, leastTables:[], details:'Aucun quiz réalisé.', worstMult:[], bestMult:null};
+      let tablesStats = {}, multStats = {};
       quizz.forEach(q=>{
-        q.results.forEach(({q:[a,],ok})=>{
-          if(!tableStats[a])tableStats[a]={ok:0,tot:0};
-          tableStats[a].tot++; if(ok)tableStats[a].ok++;
+        q.results.forEach(({q:[a,b],ok})=>{
+          tablesStats[a]=tablesStats[a]||{ok:0,tot:0};
+          tablesStats[a].tot++; if(ok) tablesStats[a].ok++;
+          let key=a+"×"+b; multStats[key]=multStats[key]||{ok:0,tot:0};
+          multStats[key].tot++; if(ok) multStats[key].ok++;
         });
       });
-      let countOk = 0, total=12;
-      for(let i=1;i<=12;i++)
-        if(tableStats[i] && tableStats[i].ok>=5) countOk++;
-      return Math.round((countOk/total)*100);
+      let mastered=0, weakest=[], best='', bestOk=0, bestTot=0;
+      let minOk = Infinity, worstMults=[];
+      for(let i=1;i<=12;i++){
+        if(tablesStats[i] && tablesStats[i].ok>=5) mastered++;
+        if(tablesStats[i] && tablesStats[i].ok < Math.max(5, tablesStats[i].tot*.5)) weakest.push(i);
+      }
+      Object.entries(multStats).forEach(([key,val])=>{
+        if(val.ok < minOk) { minOk=val.ok; worstMults=[key]; }
+        else if(val.ok===minOk) worstMults.push(key);
+        if(val.ok > bestOk || (val.ok==bestOk && val.tot>bestTot)) {bestOk=val.ok; bestTot=val.tot; best=key;}
+      });
+      return {
+        percentConnu: Math.round((mastered/12)*100),
+        leastTables: weakest,
+        details: mastered===12 ? "Bravo, toutes les tables sont maîtrisées !" : `${mastered} sur 12 parfaitement maîtrisées (≥5 quiz sans faute).`,
+        worstMult: worstMults.slice(0,3),
+        bestMult: best
+      };
     }
 
-    // ----------- PARAMETRES -------------
+    // === PARAMÈTRES : THÈME, NOM UTILISATEUR, RESET PROG + AUTRES REGLAGES ===
     function renderParametres(){
-      // Récupère settings utilisateur (userName...)
       const uid = auth.currentUser.uid, settingsRef=ref(db,'settings/'+uid+'/');
       get(settingsRef).then(snap=>{
         let sett = snap.exists()?snap.val():{userName:"", theme:"beige-brique"};
         let html = `
         <h1 style="color:var(--accent);font-size:2rem;">Paramètres</h1>
-        <form id="paramForm" class="glass glass-form" style="max-width:410px;margin:auto;padding:37px 28px;">
-        <div style="font-weight:bold;font-size:1.12rem;color:var(--accent);margin-bottom:16px;">Profil</div>
-        <input type="text" id="setUserName" style="font-size:1.08rem;" placeholder="Nom d'utilisateur" value="${sett.userName||""}" />
-        <div style="font-weight:bold;font-size:1.12rem;color:var(--accent);margin:17px 0 8px 0;">Apparence</div>
-        <select id="setTheme" style="font-size:1.04rem;margin-bottom:20px;">
-          <option value="beige-brique"${sett.theme==="beige-brique"?" selected":""}>Beige brique</option>
-          <option value="classic">Classique</option>
+        <form id="paramForm" class="glass glass-form" style="max-width:435px;margin:auto;padding:39px 34px;">
+        <div style="font-weight:bold;font-size:1.14rem;color:var(--accent);margin-bottom:18px;">Profil</div>
+        <input type="text" id="setUserName" style="font-size:1.08rem;" placeholder="Nom d'utilisateur" value="${sett.userName||""}" required/>
+        <div style="margin-top:10px;font-weight:bold;font-size:1.12rem;color:var(--accent);">Apparence</div>
+        <select id="setTheme" style="font-size:1.05rem;margin-bottom:20px;">
+          <option value="beige-brique"${sett.theme==="beige-brique"?" selected":""}>Beige brique (recommandé)</option>
+          <option value="classic">Classique minimal</option>
         </select>
+        <div style="font-weight:bold;font-size:1.1rem;margin-top:18px;margin-bottom:5px;color:var(--accent);">Autres paramètres</div>
+        <div><input type="checkbox" id="musicEnable" ${sett.music?"checked":""}> <label for="musicEnable">Musique relax intégrée (prochainement)</label></div>
+        <div class="param-saved" id="paramSaved">✅ Modifications enregistrées.</div>
         <button class="glass-btn" type="submit">Enregistrer</button>
         </form>
         <div style="text-align:right;">
-          <button class="glass-btn" style="margin-top:30px;background: #cfaca0;color:#a13700;" onclick="resetConfirm()">Réinitialiser la progression</button>
+          <button class="glass-btn" style="margin-top:25px;background: #cfaca0;color:#a13700;" onclick="resetConfirm()">Réinitialiser la progression</button>
         </div>
         `;
         content.innerHTML = html;
-        document.getElementById("paramForm").onsubmit=(e)=>{
+        const paramForm = document.getElementById("paramForm");
+        paramForm.onsubmit=(e)=>{
           e.preventDefault();
-          update(settingsRef, { userName: document.getElementById("setUserName").value, theme: document.getElementById("setTheme").value });
-          switchPage("parametres");
-        }
+          update(settingsRef, { userName: document.getElementById("setUserName").value, theme: document.getElementById("setTheme").value, music:document.getElementById("musicEnable").checked });
+          // Feedback anim
+          document.getElementById("paramSaved").style.display="block";
+          setTimeout(()=>{document.getElementById("paramSaved").style.display="none";},1900);
+        };
       });
     }
     window.resetConfirm = ()=>{
-      showConfirm("Voulez-vous vraiment réinitialiser toute votre progression ? Cette action est irréversible.",
-        ()=>{
-          // Reset progression
+      showConfirm("Voulez-vous vraiment réinitialiser toute votre progression ? Cette action est irréversible.", ()=>{
           const uid = auth.currentUser.uid;
           set(ref(db,'quizz/'+uid+'/'),[]);
           set(ref(db,'settings/'+uid+'/'),{});
           switchPage('suivi');
-        }
-      );
+      });
     };
-
     function showConfirm(msg, yes){
-      // Animation pop
       let box = document.getElementById("confirmBox");
       document.getElementById("confirmMsg").innerText = msg;
       box.style.display = "flex";
       document.getElementById("confirmYes").onclick = ()=>{ box.style.display="none"; yes(); };
       document.getElementById("confirmNo").onclick = ()=>{ box.style.display="none"; };
     }
-    // INIT
     renderPage("tables");
   </script>
 </body>
